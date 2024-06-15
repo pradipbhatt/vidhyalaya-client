@@ -26,7 +26,7 @@ const Nav = styled.div`
 `;
 
 const NavContainer = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 1400px;
   padding: 0 24px;
   display: flex;
@@ -46,9 +46,10 @@ const NavLogo = styled(LinkR)`
   font-size: 18px;
   text-decoration: none;
   color: ${({ theme }) => theme.black};
-
-  @media screen and (max-width: 768px) {
-    display: none; /* Hide NavLogo on mobile screens */
+    @media screen and (max-width: 768px) {
+    display: none;
+    align-items: center;
+    // border:5px solid black;
   }
 `;
 const Logo = styled.img`
@@ -61,6 +62,7 @@ const MobileIcon = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
     align-items: center;
+    // border:5px solid black;
   }
 `;
 
@@ -80,6 +82,7 @@ const NavItems = styled.ul`
 
 const Navlink = styled(NavLink)`
   display: flex;
+  // border:4px solid black;
   align-items: center;
   color: ${({ theme }) => theme.text_primary};
   font-weight: 500;
@@ -103,6 +106,7 @@ const UserContainer = styled.div`
   gap: 16px;
   align-items: center;
   padding: 0 6px;
+  // border:4px solid black;
   color: ${({ theme }) => theme.primary};
 `;
 
@@ -113,16 +117,17 @@ const MobileMenu = styled.ul`
   gap: 16px;
   padding: 0 6px;
   list-style: none;
-  width: 90%;
+  width: 100%;
   padding: 12px 40px 24px 40px;
   background: ${({ theme }) => theme.bg};
   position: absolute;
-  top: 80px;
+  top: 70px;
   right: 0;
   transition: all 0.6s ease-in-out;
   transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-100%)')};
   border-radius: 0 0 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  // border:4px solid black;
   opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
   z-index: ${({ isOpen }) => (isOpen ? '1000' : '-1000')};
 `;
@@ -133,15 +138,15 @@ const StyledLink = styled(Link)`
   padding: 10px 20px;
   color: ${({ theme }) => theme.text_primary};
   text-decoration: none;
-  border: 1px solid ${({ theme }) => theme.primary};
+  ${'' /* border: 1px solid ${({ theme }) => theme.primary}; */}
   border-radius: 4px;
   background-color: ${({ theme }) => theme.bg_secondary};
   text-align: center;
   transition: background-color 0.3s ease, color 0.3s ease;
-  &:hover {
+  ${'' /* &:hover {
     background-color: ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.bg};
-  }
+  } */}
 `;
 
 const ModeSwitch = styled.div`

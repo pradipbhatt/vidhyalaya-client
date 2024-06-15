@@ -5,17 +5,24 @@ import styled from 'styled-components';
 
 // Styled Container component using styled-components
 const Container = styled.div`
-  min-height: 90vh;
+  min-height: 85vh;
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   margin-top: 30px;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    ${'' /* border:4px solid black; */}
+    width:100%;
+  }
 `;
 
 const FormContainer = styled.div`
-  width: 80%;
+  width: 90%;
   max-width: 450px;
   height: 100%;
   padding: 24px;
@@ -27,6 +34,13 @@ const FormContainer = styled.div`
     transform: scale(1.01);
   }
   margin-bottom: 15px;
+  ${'' /* Mobile view */}
+   @media only screen and (min-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+  }
 `;
 
 const Title = styled.h1`
