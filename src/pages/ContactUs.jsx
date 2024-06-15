@@ -5,32 +5,29 @@ import styled from 'styled-components';
 
 // Styled Container component using styled-components
 const Container = styled.div`
-  min-height: 70vh;
+  min-height: 90vh;
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
-  margin-top:30px;
-  ${'' /* border:4px solid black; */}
+  margin-top: 30px;
 `;
 
 const FormContainer = styled.div`
-  width: 100%;
-  max-width: 450px; /* Limit maximum width to 400px */
+  width: 80%;
+  max-width: 450px;
   height: 100%;
   padding: 24px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Box shadow effect */
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-out;
   &:hover {
-    transform: scale(1.01); /* Hover zoom effect */
+    transform: scale(1.01);
   }
-  ${'' /* border:4px solid black; */}
-  margin-bottom:15px;
-  `
-;
+  margin-bottom: 15px;
+`;
 
 const Title = styled.h1`
   font-size: 24px;
@@ -51,12 +48,12 @@ const InputField = styled.input`
   border: none;
   border-radius: 4px;
   background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.1); /* Inner shadow effect */
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   outline: none;
   transition: background-color 0.3s, box-shadow 0.3s;
   &:focus {
     background-color: #fff;
-    box-shadow: 0 0 8px rgba(0,123,255,0.6); /* Updated focus style */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
   }
 `;
 
@@ -66,12 +63,12 @@ const TextArea = styled.textarea`
   border: none;
   border-radius: 4px;
   background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.1); /* Inner shadow effect */
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   outline: none;
   transition: background-color 0.3s, box-shadow 0.3s;
   &:focus {
     background-color: #fff;
-    box-shadow: 0 0 8px rgba(0,123,255,0.6); /* Updated focus style */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
   }
 `;
 
@@ -135,24 +132,24 @@ const ContactUs = () => {
       <FormContainer>
         <Title>Contact Us</Title>
         <Form ref={form} onSubmit={sendEmail}>
-          <label htmlFor="user_name">Name</label>
+          <label htmlFor="from_name">Your Name</label>
           <InputField
             type="text"
-            id="user_name"
-            name="user_name"
+            id="from_name"
+            name="from_name"
             required
             disabled={isSubmitting}
             placeholder="Enter your name"
           />
 
-          <label htmlFor="user_email">Email</label>
+          <label htmlFor="user_email">Your Email</label>
           <InputField
             type="email"
             id="user_email"
             name="user_email"
             required
             disabled={isSubmitting}
-            placeholder="Enter your email"
+            placeholder="Enter your Valid email"
           />
 
           <label htmlFor="message">Message</label>
