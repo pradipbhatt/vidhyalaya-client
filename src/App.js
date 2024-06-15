@@ -11,6 +11,7 @@ import Blogs from "./pages/Blogs";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import Entrance from "./pages/Entrance";
+import ContactUs from "./pages/ContactUs";
 
 
 
@@ -43,6 +44,7 @@ function App() {
               <Route path="/chat" exact element={<Chat />} />
               <Route path="/profile" exact element={<Profile />} />
               <Route path="/entrance" exact element={<Entrance />} />
+              <Route  path="/contactus" exact element={<ContactUs />} />
             </Routes>
           </Container>
         ) : (

@@ -1,28 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import { UserSignIn } from "../api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducers/userSlice";
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-`;
-const Title = styled.div`
-  font-size: 30px;
-  font-weight: 800;
-  color: ${({ theme }) => theme.text_primary};
-`;
-const Span = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary + 90};
-`;
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -43,34 +24,29 @@ const SignIn = () => {
     setLoading(true);
     setButtonDisabled(true);
     if (validateInputs()) {
-      await UserSignIn({ email, password })
-        .then((res) => {
-          dispatch(loginSuccess(res.data));
-          alert("Login Success");
-          setLoading(false);
-          setButtonDisabled(false);
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-          setLoading(false);
-          setButtonDisabled(false);
-        });
+      try {
+        const res = await UserSignIn({ email, password });
+        dispatch(loginSuccess(res.data));
+        alert("Login Success");
+      } catch (err) {
+        alert(err.response.data.message);
+      } finally {
+        setLoading(false);
+        setButtonDisabled(false);
+      }
+    } else {
+      setLoading(false);
+      setButtonDisabled(false);
     }
   };
 
   return (
-    <Container>
-      <div>
-        <Title>Welcome to Vidhyalaya👋</Title>
-        <Span>Please login with your details here</Span>
+    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-primary mb-4">Welcome to Vidhyalaya👋</h2>
+        <p className="text-base text-secondary">Please login with your details here</p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          flexDirection: "column",
-        }}
-      >
+      <div className="mt-8 space-y-6">
         <TextInput
           label="Email Address"
           placeholder="Enter your email address"
@@ -85,13 +61,13 @@ const SignIn = () => {
           handelChange={(e) => setPassword(e.target.value)}
         />
         <Button
-          text="SignIn"
+          text="Sign In"
           onClick={handelSignIn}
           isLoading={loading}
           isDisabled={buttonDisabled}
         />
       </div>
-    </Container>
+    </div>
   );
 };
 
