@@ -1,0 +1,27 @@
+[
+    {
+      "name": "John Doe",
+      "qualification": "M.Sc. Mathematics",
+      "subject": "Mathematics",
+      "image": "https://example.com/teacher1.jpg"
+    },
+    {
+      "name": "Jane Smith",
+      "qualification": "B.A. English Literature",
+      "subject": "English",
+      "image": "https://example.com/teacher2.jpg"
+    },
+    {
+      "name": "Michael Brown",
+      "qualification": "M.Tech. Computer Science",
+      "subject": "Computer Science",
+      "image": "https://example.com/teacher3.jpg"
+    },
+    {
+      "name": "Emily Johnson",
+      "qualification": "Ph.D. Physics",
+      "subject": "Physics",
+      "image": "https://example.com/teacher4.jpg"
+    }
+  ]
+  

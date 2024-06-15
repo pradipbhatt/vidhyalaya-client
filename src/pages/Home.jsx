@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Banner from "./Banner";
 import Footer from "./Footer";
-import SchoolList from "./SchoolList";
+import SchoolList from "../components/SchoolList";
 import Testimonials from "./Testimonials";
 import ContactUs from "./ContactUs";
 
