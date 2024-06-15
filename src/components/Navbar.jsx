@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import LogoImg from '../utils/Images/Logo1.png';
-import { Link as LinkR, NavLink, Link } from 'react-router-dom';
-import { MenuRounded, Search } from '@mui/icons-material';
+import { Link as LinkR, NavLink } from 'react-router-dom';
+import { MenuRounded } from '@mui/icons-material';
 import { Avatar, Button, Menu, MenuItem, Typography, Switch, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/reducers/userSlice'; // Adjust the import according to your file structure
-import axios from 'axios'; // Assuming you're using axios for API calls
+import { logout } from '../redux/reducers/userSlice';
+import axios from 'axios';
+import { RiMoonClearFill, RiSunFill } from 'react-icons/ri'; // Importing icons from react-icons
+import { Link } from 'react-router-dom';
+
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -43,13 +46,16 @@ const NavLogo = styled(LinkR)`
   font-size: 18px;
   text-decoration: none;
   color: ${({ theme }) => theme.black};
-`;
 
+  @media screen and (max-width: 768px) {
+    display: none; /* Hide NavLogo on mobile screens */
+  }
+`;
 const Logo = styled.img`
   height: 52px;
 `;
 
-const Mobileicon = styled.div`
+const MobileIcon = styled.div`
   color: ${({ theme }) => theme.text_primary};
   display: none;
   @media screen and (max-width: 768px) {
@@ -100,18 +106,6 @@ const UserContainer = styled.div`
   color: ${({ theme }) => theme.primary};
 `;
 
-const TextButton = styled.div`
-  text-align: end;
-  color: ${({ theme }) => theme.secondary};
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  &:hover {
-    color: ${({ theme }) => theme.primary};
-  }
-`;
-
 const MobileMenu = styled.ul`
   display: flex;
   flex-direction: column;
@@ -150,40 +144,15 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const SearchContainer = styled.div`
-  position: relative;
-`;
-
-const SearchInput = styled.input`
-  padding: 10px 40px 10px 16px;
-  border-radius: 20px;
-  border: 1px solid ${({ theme }) => theme.text_primary};
-  background-color: ${({ theme }) => theme.bg_secondary};
-  color: ${({ theme }) => theme.text_primary};
-  width: 300px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  &::placeholder {
-    color: ${({ theme }) => theme.text_secondary};
-  }
-`;
-
-const SearchButton = styled.button`
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
 const ModeSwitch = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
-const ModeLabel = styled.span`
-  color: ${({ theme }) => theme.text_primary};
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 8px;
 `;
 
@@ -193,6 +162,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [userData, setUserData] = useState(null);
   const currentUser = useSelector((state) => state.user); // Adjust according to your state structure
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Fetch user data from API
@@ -206,98 +176,85 @@ const Navbar = () => {
     };
 
     fetchUserData();
-}, []);
+  }, []);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-const handleClick = (event) => {
-setAnchorEl(event.currentTarget);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleClose();
+  };
+
+  const handleModeChange = () => {
+    setDarkMode(!darkMode);
+    console.log('Mode changed');
+  };
+
+  return (
+    <Nav>
+      <NavContainer>
+        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+          <MenuRounded sx={{ color: 'inherit' }} />
+        </MobileIcon>
+        <NavLogo to="/">
+          <Logo src={LogoImg} />
+          Vidhyalaya
+        </NavLogo>
+        <MobileMenu isOpen={isOpen}>
+          <Navlink to="/" onClick={() => setIsOpen(false)}>Home</Navlink>
+          <Navlink to="/about" onClick={() => setIsOpen(false)}>About</Navlink>
+          <Navlink to="/compare" onClick={() => setIsOpen(false)}>Compare</Navlink>
+          <Navlink to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Navlink>
+          <Navlink to="/chat" onClick={() => setIsOpen(false)}>Chat</Navlink>
+        </MobileMenu>
+
+        <NavItems>
+          <Navlink to="/">Home</Navlink>
+          <Navlink to="/about">About</Navlink>
+          <Navlink to="/compare">Compare</Navlink>
+          <Navlink to="/blogs">Blogs</Navlink>
+          <Navlink to="/chat">Chat</Navlink>
+        </NavItems>
+
+        <UserContainer>
+          <ModeSwitch onClick={handleModeChange}>
+            <IconWrapper>
+              {darkMode ? <RiMoonClearFill size={24} /> : <RiSunFill size={24} />}
+            </IconWrapper>
+            <Switch checked={darkMode} onChange={handleModeChange} />
+          </ModeSwitch>
+          <Button onClick={handleClick}>
+            <Avatar src={currentUser?.img}>
+              {currentUser?.name ? currentUser.name[0] : ''}
+            </Avatar>
+          </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <Box px={2} py={1}>
+              <Typography variant="body1">{userData?.email}</Typography>
+              <Typography variant="body1">{userData?.name}</Typography>
+            </Box>
+            <MenuItem onClick={handleClose}>
+              <StyledLink to="/profile">My Profile</StyledLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <StyledLink to="/entrance">Entrance</StyledLink>
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
+        </UserContainer>
+      </NavContainer>
+    </Nav>
+  );
 };
-
-const handleClose = () => {
-setAnchorEl(null);
-};
-
-const handleLogout = () => {
-dispatch(logout());
-handleClose();
-};
-
-const handleSearch = (query) => {
-// Handle search functionality
-console.log('Searching for:', query);
-};
-
-const handleModeChange = () => {
-// Handle dark/light mode change
-console.log('Mode changed');
-};
-
-return (
-<Nav>
-<NavContainer>
-<Mobileicon onClick={() => setIsOpen(!isOpen)}>
-<MenuRounded sx={{ color: 'inherit' }} />
-</Mobileicon>
-<NavLogo to="/">
-<Logo src={LogoImg} />
-Vidhyalaya
-</NavLogo>     <MobileMenu isOpen={isOpen}>
-      <Navlink to="/">Home</Navlink>
-      <Navlink to="/about">About</Navlink>
-      <Navlink to="/compare">Compare</Navlink>
-      <Navlink to="/blogs">Blogs</Navlink>
-      <Navlink to="/chat">Chat</Navlink>
-    </MobileMenu>
-
-    <NavItems>
-      <Navlink to="/">Home</Navlink>
-      <Navlink to="/about">About</Navlink>
-      <Navlink to="/compare">Compare</Navlink>
-      <Navlink to="/blogs">Blogs</Navlink>
-      <Navlink to="/chat">Chat</Navlink>
-    </NavItems>
-
-    <SearchContainer>
-      <SearchInput
-        type="text"
-        placeholder="Search..."
-        onChange={(e) => handleSearch(e.target.value)}
-      />
-      <SearchButton>
-        <Search />
-      </SearchButton>
-    </SearchContainer>
-
-    <UserContainer>
-      <ModeSwitch>
-        <ModeLabel>Dark Mode</ModeLabel>
-        <Switch onChange={handleModeChange} />
-      </ModeSwitch>
-      <Button onClick={handleClick}>
-        <Avatar src={currentUser?.img}>
-          {currentUser?.name ? currentUser.name[0] : ''}
-        </Avatar>
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <Box px={2} py={1}>
-          <Typography variant="body1">{userData?.email}</Typography>
-          <Typography variant="body1">{userData?.name}</Typography>
-        </Box>
-        <MenuItem onClick={handleClose}>
-          <StyledLink to="/profile">My Profile</StyledLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <StyledLink to="/entrance">Entrance</StyledLink>
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu>
-    </UserContainer>
-  </NavContainer>
-</Nav>
-)};
 
 export default Navbar;
