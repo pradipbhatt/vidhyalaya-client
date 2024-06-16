@@ -59,7 +59,7 @@ const Banner = () => {
                 <Grid item xs={12} md={6}>
                     <Box display="flex" justifyContent="center">
                         <img
-                            src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/853250/college-building-clipart-md.png"
+                            src="https://www.pngall.com/wp-content/uploads/8/Child-Student-PNG-Free-Image.png"
                             alt="Comparison"
                             style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }}
                         />
