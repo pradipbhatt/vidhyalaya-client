@@ -26,7 +26,7 @@ const Card = styled.div`
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
-  width: 700px;
+  width: 800px;
   transition: transform 0.3s ease;
   cursor: pointer;
   &:hover {
