@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Box, Grid, Card, CardContent, Avatar } from '@mui/material';
+import { Typography, Box, Grid, Card, CardContent, Avatar, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const testimonials = [
     {
@@ -24,8 +25,11 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+    const theme = useTheme();
+    const isMdScreen = useMediaQuery(theme.breakpoints.up('md'));
+
     return (
-        <Box py={5} bgcolor="#f8f8f8">
+        <Box py={5} bgcolor="#f8f8f8" width="90%" margin="0 auto">
             <Typography variant="h4" textAlign="center" mb={5}>
                 Testimonials
             </Typography>

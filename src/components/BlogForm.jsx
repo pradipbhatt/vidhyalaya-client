@@ -65,11 +65,13 @@ const TextArea = styled.textarea`
   outline: none;
   transition: background-color 0.3s, box-shadow 0.3s;
   resize: vertical;
+  white-space: pre-wrap; /* Preserves newlines */
   &:focus {
     background-color: #fff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
   }
 `;
+
 
 const Button = styled.button`
   width: 100%;
