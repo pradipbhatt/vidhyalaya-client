@@ -4,7 +4,7 @@ import Banner from "./Banner";
 import Footer from "./Footer";
 import SchoolList from "../components/SchoolList";
 import Testimonials from "./Testimonials";
-import ContactUs from "./ContactUs";
+import BlogForm from "../components/BlogForm";
 
 const Container = styled.div`
   flex: 1;
@@ -33,7 +33,7 @@ const Home = () => {
         <Banner/>
         <SchoolList/>
         <Testimonials/>
-        <ContactUs/>
+        <BlogForm/>
         <Footer/>
       </Wrapper>
     </Container>

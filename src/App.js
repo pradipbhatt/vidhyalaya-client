@@ -18,6 +18,8 @@ import Lba from './components/schools/Lba';
 import RadiantSchool from './components/schools/RadiantSchool';
 import Shadharan from './components/schools/Shadharan';
 import MorningGlorySchool from './components/schools/MorningGlorySchool';
+import BlogForm from './components/BlogForm';
+import Blog from "./pages/Blogs"
 
 const Container = styled.div`
   width: 100%;
@@ -54,6 +56,7 @@ function App() {
               <Route path="/schools/1" exact element={<RadiantSchool />} />
               <Route path="/schools/3" exact element={<MorningGlorySchool/>} />
               <Route path="/schools/4" exact element={<Shadharan/>} />
+              <Route path="/blogform" exact element={<BlogForm />} />
             </Routes>
           </Container>
         ) : (

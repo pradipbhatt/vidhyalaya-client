@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import LogoImg from '../utils/Images/Logo1.png';
 import { Link as LinkR, NavLink } from 'react-router-dom';
 import { MenuRounded } from '@mui/icons-material';
-import { Avatar, Button, Menu, MenuItem, Typography, Switch, Box } from '@mui/material';
+import { Avatar, Menu, MenuItem, Typography, Switch, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/reducers/userSlice';
-import axios from 'axios';
-import { RiMoonClearFill, RiSunFill } from 'react-icons/ri'; // Importing icons from react-icons
+import { logout, fetchUserData } from '../redux/reducers/userSlice';
+import { RiMoonClearFill, RiSunFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -46,12 +44,11 @@ const NavLogo = styled(LinkR)`
   font-size: 18px;
   text-decoration: none;
   color: ${({ theme }) => theme.black};
-    @media screen and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     display: none;
-    align-items: center;
-    // border:5px solid black;
   }
 `;
+
 const Logo = styled.img`
   height: 52px;
 `;
@@ -62,7 +59,6 @@ const MobileIcon = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
     align-items: center;
-    // border:5px solid black;
   }
 `;
 
@@ -82,7 +78,6 @@ const NavItems = styled.ul`
 
 const Navlink = styled(NavLink)`
   display: flex;
-  // border:4px solid black;
   align-items: center;
   color: ${({ theme }) => theme.text_primary};
   font-weight: 500;
@@ -106,7 +101,6 @@ const UserContainer = styled.div`
   gap: 16px;
   align-items: center;
   padding: 0 6px;
-  // border:4px solid black;
   color: ${({ theme }) => theme.primary};
 `;
 
@@ -127,7 +121,6 @@ const MobileMenu = styled.ul`
   transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-100%)')};
   border-radius: 0 0 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  // border:4px solid black;
   opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
   z-index: ${({ isOpen }) => (isOpen ? '1000' : '-1000')};
 `;
@@ -138,15 +131,10 @@ const StyledLink = styled(Link)`
   padding: 10px 20px;
   color: ${({ theme }) => theme.text_primary};
   text-decoration: none;
-  ${'' /* border: 1px solid ${({ theme }) => theme.primary}; */}
   border-radius: 4px;
   background-color: ${({ theme }) => theme.bg_secondary};
   text-align: center;
   transition: background-color 0.3s ease, color 0.3s ease;
-  ${'' /* &:hover {
-    background-color: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.bg};
-  } */}
 `;
 
 const ModeSwitch = styled.div`
@@ -165,23 +153,12 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const currentUser = useSelector((state) => state.user); // Adjust according to your state structure
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Fetch user data from API
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('/api/user'); // Replace with your API endpoint
-        setUserData(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -232,30 +209,32 @@ const Navbar = () => {
             <IconWrapper>
               {darkMode ? <RiMoonClearFill size={24} /> : <RiSunFill size={24} />}
             </IconWrapper>
-            <Switch checked={darkMode} onChange={handleModeChange} />
+            <Switch checked={darkMode} />
           </ModeSwitch>
-          <Button onClick={handleClick}>
-            <Avatar src={currentUser?.img}>
-              {currentUser?.name ? currentUser.name[0] : ''}
-            </Avatar>
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <Box px={2} py={1}>
-              <Typography variant="body1">{userData?.email}</Typography>
-              <Typography variant="body1">{userData?.name}</Typography>
-            </Box>
-            <MenuItem onClick={handleClose}>
-              <StyledLink to="/profile">My Profile</StyledLink>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <StyledLink to="/entrance">Entrance</StyledLink>
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
+
+          {currentUser ? (
+            <>
+              <Avatar onClick={handleClick}>{currentUser.name.charAt(0)}</Avatar>
+              <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+               <Box display="flex" flexDirection="column" alignItems="flex-end">
+                <Typography variant="body1">{currentUser.name}</Typography>
+                <Typography variant="body2">{currentUser.email}</Typography>
+              </Box>
+              <MenuItem component={Link} to="/profile" onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <StyledLink to="/login">Login</StyledLink>
+              <StyledLink to="/signup">Sign Up</StyledLink>
+            </>
+          )}
         </UserContainer>
       </NavContainer>
     </Nav>
