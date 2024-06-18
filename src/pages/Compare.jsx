@@ -1,82 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/system';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import schoolData from './schoolData.json';
-
-const PageContainer = styled('div')({
-  fontFamily: 'Times New Roman, Times, serif',
-  color: '#003322',
-  padding: '20px',
-  marginBottom: '40px',
-  overflowY: 'scroll',
-  maxHeight: 'calc(100vh - 10px)',
-});
-
-const Heading = styled('h1')({
-  textAlign: 'center',
-  marginBottom: '40px',
-  fontFamily: 'cursive',
-});
-
-const CompareContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  margin: '40px',
-});
-
-const Select = styled('select')({
-  width: '100%',
-  padding: '8px',
-  marginBottom: '20px',
-});
-
-const Button = styled('button')({
-  padding: '10px 20px',
-  background: 'linear-gradient(to right, #003322, #004d40)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '20px',
-  cursor: 'pointer',
-  transition: 'background-color 0.3s ease, color 0.3s ease',
-  '&:hover': {
-    background: 'linear-gradient(to right, #004d40, #003322)',
-  },
-});
-
-const TableContainer = styled('div')({
-  overflowX: 'auto',
-});
-
-const Table = styled('table')({
-  width: '100%',
-  borderCollapse: 'collapse',
-  marginBottom: '20px',
-});
-
-const TableHead = styled('thead')({
-  backgroundColor: '#f2f2f2',
-});
-
-const TableRow = styled('tr')({});
-
-const TableHeading = styled('th')({
-  border: '1px solid #ddd',
-  padding: '8px',
-  textAlign: 'left',
-});
-
-const TableData = styled('td')({
-  border: '1px solid #ddd',
-  padding: '8px',
-});
-
-const MapWrapper = styled('div')({
-  height: '300px',
-  width: '100%',
-  marginBottom: '20px',
-});
 
 const Compare = () => {
   const [schools, setSchools] = useState([]);
@@ -99,160 +24,168 @@ const Compare = () => {
   };
 
   return (
-    <>
-      <PageContainer>
-        <Heading>Compare Schools</Heading>
-        <CompareContainer>
-          <Select onChange={e => setSelectedSchool1(e.target.value)}>
-            <option value="">Select First School</option>
-            {schools.map(school => (
-              <option key={school.id} value={school.id}>
-                {school.title}
-              </option>
-            ))}
-          </Select>
-          <Select onChange={e => setSelectedSchool2(e.target.value)}>
-            <option value="">Select Second School</option>
-            {schools.map(school => (
-              <option key={school.id} value={school.id}>
-                {school.title}
-              </option>
-            ))}
-          </Select>
-          <Button onClick={handleCompare}>Compare</Button>
-        </CompareContainer>
-        {school1 && school2 && (
-          <>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableHeading>Feature</TableHeading>
-                    <TableHeading>{school1.title}</TableHeading>
-                    <TableHeading>{school2.title}</TableHeading>
-                  </TableRow>
-                </TableHead>
-                <tbody>
-                  <TableRow>
-                    <TableData>Price (Class 11)</TableData>
-                    <TableData>RS {school1.prices.class11}</TableData>
-                    <TableData>RS {school2.prices.class11}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Price (Class 12)</TableData>
-                    <TableData>RS {school1.prices.class12}</TableData>
-                    <TableData>RS {school2.prices.class12}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Description</TableData>
-                    <TableData>{school1.description}</TableData>
-                    <TableData>{school2.description}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Infrastructure</TableData>
-                    <TableData>{school1.infrastructure}</TableData>
-                    <TableData>{school2.infrastructure}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Contact</TableData>
-                    <TableData>{school1.contact.phone}</TableData>
-                    <TableData>{school2.contact.phone}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Location</TableData>
-                    <TableData>{school1.location.lat}, {school1.location.lng}</TableData>
-                    <TableData>{school2.location.lat}, {school2.location.lng}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Courses</TableData>
-                    <TableData>{school1.courses}</TableData>
-                    <TableData>{school2.courses}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Rank</TableData>
-                    <TableData>{school1.rank}</TableData>
-                    <TableData>{school2.rank}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Alumni Total</TableData>
-                    <TableData>{school1.alumniTotal}</TableData>
-                    <TableData>{school2.alumniTotal}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Alumni Engineers</TableData>
-                    <TableData>{school1.alumniEngineers}</TableData>
-                    <TableData>{school2.alumniEngineers}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Alumni Doctors</TableData>
-                    <TableData>{school1.alumniDoctors}</TableData>
-                    <TableData>{school2.alumniDoctors}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Teachers</TableData>
-                    <TableData>{school1.teachers}</TableData>
-                    <TableData>{school2.teachers}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Teacher Qualifications</TableData>
-                    <TableData>{school1.teacherQualifications}</TableData>
-                    <TableData>{school2.teacherQualifications}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Passout Rate</TableData>
-                    <TableData>{school1.passoutRate}</TableData>
-                    <TableData>{school2.passoutRate}</TableData>
-                  </TableRow>
-                  <TableRow>
-                    <TableData>Website</TableData>
-                    <TableData>
-                      <a
-                        href={school1.website}
-                        className="text-blue-500 underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Visit {school1.title}
-                      </a>
-                    </TableData>
-                    <TableData>
-                      <a
-                        href={school2.website}
-                        className="text-blue-500 underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Visit {school2.title}
-                      </a>
-                    </TableData>
-                  </TableRow>
-                </tbody>
-              </Table>
-            </TableContainer>
-            <MapWrapper>
-              <Heading>School Location on Map</Heading>
-              <MapContainer
-                center={[school1.location.lat, school1.location.lng]}
-                zoom={13}
-                style={{ height: '100%', width: '100%' }}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                <Marker position={[school1.location.lat, school1.location.lng]}>
-                  <Popup>{school1.title}</Popup>
-                </Marker>
-                <Marker position={[school2.location.lat, school2.location.lng]}>
-                  <Popup>{school2.title}</Popup>
-                </Marker>
-              </MapContainer>
-            </MapWrapper>
-          </>
-        )}
-        {/* <Footer /> */}
-      </PageContainer>
-    </>
+    <div className="font-serif text-emerald-900 p-5 mb-10 overflow-y-scroll max-h-[calc(100vh-10px)]">
+      <h1 className="text-center mb-10 font-cursive">Compare Schools</h1>
+      <div className="flex flex-col items-center my-10">
+        <select 
+          onChange={e => setSelectedSchool1(e.target.value)}
+          className="w-full p-2 mb-5 border border-gray-300 rounded"
+        >
+          <option value="">Select First School</option>
+          {schools.map(school => (
+            <option key={school.id} value={school.id}>
+              {school.title}
+            </option>
+          ))}
+        </select>
+        <select 
+          onChange={e => setSelectedSchool2(e.target.value)}
+          className="w-full p-2 mb-5 border border-gray-300 rounded"
+        >
+          <option value="">Select Second School</option>
+          {schools.map(school => (
+            <option key={school.id} value={school.id}>
+              {school.title}
+            </option>
+          ))}
+        </select>
+        <button 
+          onClick={handleCompare}
+          className="p-2 bg-gradient-to-r from-emerald-900 to-teal-700 text-gray-400 rounded-2xl hover:from-teal-700 hover:to-emerald-900 transition duration-300"
+        >
+          Compare
+        </button>
+      </div>
+      {school1 && school2 && (
+        <>
+          <div className="overflow-x-auto mb-5">
+            <table className="w-full border-collapse mb-5">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="border p-2 text-left">Feature</th>
+                  <th className="border p-2 text-left">{school1.title}</th>
+                  <th className="border p-2 text-left">{school2.title}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border p-2">Price (Class 11)</td>
+                  <td className="border p-2">RS {school1.prices.class11}</td>
+                  <td className="border p-2">RS {school2.prices.class11}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Price (Class 12)</td>
+                  <td className="border p-2">RS {school1.prices.class12}</td>
+                  <td className="border p-2">RS {school2.prices.class12}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Description</td>
+                  <td className="border p-2">{school1.description}</td>
+                  <td className="border p-2">{school2.description}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Infrastructure</td>
+                  <td className="border p-2">{school1.infrastructure}</td>
+                  <td className="border p-2">{school2.infrastructure}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Contact</td>
+                  <td className="border p-2">{school1.contact.phone}</td>
+                  <td className="border p-2">{school2.contact.phone}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Location</td>
+                  <td className="border p-2">{school1.location.lat}, {school1.location.lng}</td>
+                  <td className="border p-2">{school2.location.lat}, {school2.location.lng}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Courses</td>
+                  <td className="border p-2">{school1.courses}</td>
+                  <td className="border p-2">{school2.courses}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Rank</td>
+                  <td className="border p-2">{school1.rank}</td>
+                  <td className="border p-2">{school2.rank}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Alumni Total</td>
+                  <td className="border p-2">{school1.alumniTotal}</td>
+                  <td className="border p-2">{school2.alumniTotal}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Alumni Engineers</td>
+                  <td className="border p-2">{school1.alumniEngineers}</td>
+                  <td className="border p-2">{school2.alumniEngineers}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Alumni Doctors</td>
+                  <td className="border p-2">{school1.alumniDoctors}</td>
+                  <td className="border p-2">{school2.alumniDoctors}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Teachers</td>
+                  <td className="border p-2">{school1.teachers}</td>
+                  <td className="border p-2">{school2.teachers}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Teacher Qualifications</td>
+                  <td className="border p-2">{school1.teacherQualifications}</td>
+                  <td className="border p-2">{school2.teacherQualifications}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Passout Rate</td>
+                  <td className="border p-2">{school1.passoutRate}</td>
+                  <td className="border p-2">{school2.passoutRate}</td>
+                </tr>
+                <tr>
+                  <td className="border p-2">Website</td>
+                  <td className="border p-2">
+                    <a
+                      href={school1.website}
+                      className="text-blue-500 underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Visit {school1.title}
+                    </a>
+                  </td>
+                  <td className="border p-2">
+                    <a
+                      href={school2.website}
+                      className="text-blue-500 underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Visit {school2.title}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="h-72 w-full mb-5">
+            <h1 className="text-center mb-5 font-cursive">School Location on Map</h1>
+            <MapContainer
+              center={[school1.location.lat, school1.location.lng]}
+              zoom={13}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              <Marker position={[school1.location.lat, school1.location.lng]}>
+                <Popup>{school1.title}</Popup>
+              </Marker>
+              <Marker position={[school2.location.lat, school2.location.lng]}>
+                <Popup>{school2.title}</Popup>
+              </Marker>
+            </MapContainer>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

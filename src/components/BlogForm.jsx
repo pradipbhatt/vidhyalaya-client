@@ -1,95 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
-
-const Container = styled.div`
-  min-height: 85vh;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Roboto', sans-serif;
-  margin-top: 30px;
-`;
-
-const FormContainer = styled.div`
-  width: 90%;
-  max-width: 450px;
-  padding: 24px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-out;
-  &:hover {
-    transform: scale(1.01);
-  }
-  margin-bottom: 15px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 16px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const InputField = styled.input`
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  &:focus {
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-  }
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  resize: vertical;
-  white-space: pre-wrap; /* Preserves newlines */
-  &:focus {
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-  }
-`;
-
-
-const Button = styled.button`
-  width: 100%;
-  padding: 12px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  &:hover {
-    background-color: #0056b3;
-  }
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-`;
 
 const BlogForm = ({ fetchPosts }) => {
   const [formData, setFormData] = useState({
@@ -121,73 +32,62 @@ const BlogForm = ({ fetchPosts }) => {
             color: '#fff',
           },
         });
-        setFormData({
-          title: '',
-          content: '',
-          author: '',
-        });
-        if (fetchPosts) {
-          fetchPosts(); // Refresh the posts after creating a new post
-        }
+        setFormData({ title: '', content: '', author: '' });
+        fetchPosts();
       } else {
-        throw new Error('Failed to create post');
+        toast.error('Failed to create post');
       }
     } catch (error) {
-      console.error('Error creating post:', error.message);
-      toast.error(`Failed to create post: ${error.message}`);
+      console.error('Error creating post:', error);
+      toast.error('An error occurred');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Container>
-      <Toaster position="top-right" reverseOrder={false} />
-      <FormContainer>
-        <Title>Create a New Blog</Title>
-        <Form onSubmit={handleSubmit}>
-          <label htmlFor="title">Title</label>
-          <InputField
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center mt-8">
+      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105 mb-4">
+        <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <input
             type="text"
-            id="title"
             name="title"
             value={formData.title}
             onChange={handleChange}
+            placeholder="Title"
             required
-            disabled={isSubmitting}
-            placeholder="Enter the title"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 focus:outline-none"
           />
-
-          <label htmlFor="content">Content</label>
-          <TextArea
-            id="content"
+          <textarea
             name="content"
             value={formData.content}
             onChange={handleChange}
+            placeholder="Content"
+            rows="8"
             required
-            rows="4"
-            disabled={isSubmitting}
-            placeholder="Enter the content"
-          ></TextArea>
-
-          <label htmlFor="author">Author</label>
-          <InputField
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 focus:outline-none"
+          ></textarea>
+          <input
             type="text"
-            id="author"
             name="author"
             value={formData.author}
             onChange={handleChange}
+            placeholder="Author"
             required
-            disabled={isSubmitting}
-            placeholder="Enter the author's name"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 focus:outline-none"
           />
-
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Creating...' : 'Create Post'}
-          </Button>
-        </Form>
-      </FormContainer>
-    </Container>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </button>
+        </form>
+      </div>
+      <Toaster />
+    </div>
   );
 };
 

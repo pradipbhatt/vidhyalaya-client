@@ -1,108 +1,6 @@
 import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 import toast, { Toaster } from 'react-hot-toast';
-import styled from 'styled-components';
-
-// Styled Container component using styled-components
-const Container = styled.div`
-  min-height: 85vh;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Roboto', sans-serif;
-  margin-top: 30px;
-  @media only screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    ${'' /* border:4px solid black; */}
-    width:100%;
-  }
-`;
-
-const FormContainer = styled.div`
-  width: 90%;
-  max-width: 450px;
-  height: 100%;
-  padding: 24px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-out;
-  &:hover {
-    transform: scale(1.01);
-  }
-  margin-bottom: 15px;
-  ${'' /* Mobile view */}
-   @media only screen and (min-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 16px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const InputField = styled.input`
-  width: 90%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  &:focus {
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-  }
-`;
-
-const TextArea = styled.textarea`
-  width: 90%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  &:focus {
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 12px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  &:hover {
-    background-color: #0056b3;
-  }
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-`;
 
 const ContactUs = () => {
   const form = useRef();
@@ -141,47 +39,62 @@ const ContactUs = () => {
   };
 
   return (
-    <Container>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
       <Toaster position="top-right" reverseOrder={false} />
-      <FormContainer>
-        <Title>Contact Us</Title>
-        <Form ref={form} onSubmit={sendEmail}>
-          <label htmlFor="from_name">Your Name</label>
-          <InputField
-            type="text"
-            id="from_name"
-            name="from_name"
-            required
-            disabled={isSubmitting}
-            placeholder="Enter your name"
-          />
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold text-center mb-6">Contact Us</h1>
+        <form ref={form} onSubmit={sendEmail}>
+          <div className="mb-4">
+            <label htmlFor="from_name" className="block mb-2">Your Name</label>
+            <input
+              type="text"
+              id="from_name"
+              name="from_name"
+              required
+              disabled={isSubmitting}
+              placeholder="Enter your name"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-          <label htmlFor="user_email">Your Email</label>
-          <InputField
-            type="email"
-            id="user_email"
-            name="user_email"
-            required
-            disabled={isSubmitting}
-            placeholder="Enter your Valid email"
-          />
+          <div className="mb-4">
+            <label htmlFor="user_email" className="block mb-2">Your Email</label>
+            <input
+              type="email"
+              id="user_email"
+              name="user_email"
+              required
+              disabled={isSubmitting}
+              placeholder="Enter your Valid email"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-          <label htmlFor="message">Message</label>
-          <TextArea
-            id="message"
-            name="message"
-            required
-            rows="4"
-            disabled={isSubmitting}
-            placeholder="Type your message here"
-          ></TextArea>
+          <div className="mb-4">
+            <label htmlFor="message" className="block mb-2">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="4"
+              disabled={isSubmitting}
+              placeholder="Type your message here"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            ></textarea>
+          </div>
 
-          <Button type="submit" disabled={isSubmitting}>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-2 px-4 bg-blue-500 text-white rounded-lg focus:outline-none ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+            }`}
+          >
             {isSubmitting ? 'Sending...' : 'Send'}
-          </Button>
-        </Form>
-      </FormContainer>
-    </Container>
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

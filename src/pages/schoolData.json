@@ -25,7 +25,7 @@
     },
     {
         "id": 2,
-        "title": "Janajyoti Multiple Campus Mahendranagar",
+        "title": "JMC Mahendranagar",
         "prices": {
             "class11": 58000,
             "class12": 60000
@@ -49,7 +49,7 @@
     },
     {
         "id": 3,
-        "title": "Kailali Multiple Campus",
+        "title": "KMC Dhangadi",
         "prices": {
             "class11": 54000,
             "class12": 57000
@@ -144,7 +144,7 @@
         "showMoreUrl": "https://example.com/little-buddha-academy"
     },      {
         "id": 7,
-        "title": "Mahendranagar Secondary School Shadharan",
+        "title": "Mahendranagar Secondary ",
         "prices": {
             "class11": 52000,
             "class12": 55000

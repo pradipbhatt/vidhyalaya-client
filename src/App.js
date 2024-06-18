@@ -11,7 +11,7 @@ import Compare from "./pages/Compare";
 import Blogs from "./pages/Blogs";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
-import Entrance from "./pages/Entrance";
+import Testimonials from "./components/Testimonials"
 import ContactUs from "./pages/ContactUs";
 import SchoolList from './components/SchoolList';
 import Lba from './components/schools/Lba';
@@ -19,7 +19,7 @@ import RadiantSchool from './components/schools/RadiantSchool';
 import Shadharan from './components/schools/Shadharan';
 import MorningGlorySchool from './components/schools/MorningGlorySchool';
 import BlogForm from './components/BlogForm';
-import Blog from "./pages/Blogs"
+
 
 const Container = styled.div`
   width: 100%;
@@ -47,9 +47,10 @@ function App() {
               <Route path="/blogs" exact element={<Blogs />} />
               <Route path="/about" exact element={<About />} />
               <Route path="/compare" exact element={<Compare />} />
+              <Route path="/testimonials" exact element={<Testimonials />} />
               <Route path="/chat" exact element={<Chat />} />
               <Route path="/profile" exact element={<Profile />} />
-              <Route path="/entrance" exact element={<Entrance />} />
+              {/* <Route path="/entrance" exact element={<Entrance />} /> */}
               <Route path="/contactus" exact element={<ContactUs />} />
               <Route path="/schools" exact element={<SchoolList />} />
               <Route path="/schools/2" exact element={<Lba />} />

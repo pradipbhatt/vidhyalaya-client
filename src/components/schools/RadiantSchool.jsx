@@ -12,7 +12,7 @@ import { styled } from "@mui/system";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Footer from "../../pages/Footer";
+import Footer from "../Footer";
 
 const Container = styled(Box)`
   flex: 1;

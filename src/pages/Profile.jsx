@@ -1,46 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserData } from '../redux/reducers/userSlice';
-import styled from 'styled-components';
-import { Typography, Avatar, CircularProgress, Box } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
-
-const ProfileContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  background-color: ${({ theme }) => theme.bg};
-  color: ${({ theme }) => theme.text_primary};
-`;
-
-const ProfileCard = styled.div`
-  background-color: #fff;
-  box-shadow: 1px 1px 12px 11px rgba(176,169,255,0.75);
--webkit-box-shadow: 1px 1px 12px 11px rgba(126,169,255,0.75);
--moz-box-shadow: 1px 1px 12px 11px rgba(176,169,255,0.75);
-  border-radius: 8px;
-  padding: 40px;
-  width: 100%;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const ProfileAvatar = styled(Avatar)`
-  width: 500px;
-  height: 500px;
-  background-color: ${({ theme }) => theme.primary};
-  margin-bottom: 20px;
-`;
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -54,37 +15,40 @@ const Profile = () => {
 
   if (status === 'loading') {
     return (
-      <ProfileContainer>
-        <CircularProgress />
-      </ProfileContainer>
+      <div className="flex justify-center items-center h-screen w-full bg-gray-100">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
     );
   }
 
   if (status === 'failed') {
     return (
-      <ProfileContainer>
-        <Typography variant="h6">Error: {error}</Typography>
-      </ProfileContainer>
+      <div className="flex justify-center items-center h-screen w-full bg-gray-100">
+        <p className="text-lg text-red-600">Error: {error}</p>
+      </div>
     );
   }
 
   return (
-    <ProfileContainer>
+    <div className="flex justify-center items-center h-screen w-full bg-gray-100 text-gray-900">
       {currentUser ? (
-        <ProfileCard>
-          <ProfileAvatar>
-            <FiUser size={50} />
-          </ProfileAvatar>
-          <Box mt={2}>
-            <Typography variant="h5">{currentUser.name}</Typography>
-            <Typography variant="body1">{currentUser.email}</Typography>
+        <div className="bg-white shadow-lg rounded-lg p-10 w-full max-w-lg text-center transform transition-transform duration-300 hover:scale-105 cursor-pointer">
+          <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex justify-center items-center text-4xl text-white bg-primary-500">
+            <FiUser />
+          </div>
+          <div className="mt-4">
+            <p className="text-xl font-bold">{currentUser.name}</p>
+            <p className="text-gray-600">{currentUser.email}</p>
             {/* Add more fields as necessary */}
-          </Box>
-        </ProfileCard>
+          </div>
+          {/* Pass currentUser.email to child components or store it in Redux */}
+        </div>
       ) : (
-        <Typography variant="h6">No user data available</Typography>
+        <p className="text-lg">No user data available</p>
       )}
-    </ProfileContainer>
+    </div>
   );
 };
 

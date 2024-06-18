@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import Banner from "./Banner";
-import Footer from "./Footer";
+import Banner from "../components/Banner";
+import Footer from "../components/Footer";
 import SchoolList from "../components/SchoolList";
-import Testimonials from "./Testimonials";
 import BlogForm from "../components/BlogForm";
+import Testimonials from "../components/Testimonials";   
 
 const Container = styled.div`
   flex: 1;
@@ -32,7 +32,7 @@ const Home = () => {
       <Wrapper>
         <Banner/>
         <SchoolList/>
-        <Testimonials/>
+       <Testimonials/>
         <BlogForm/>
         <Footer/>
       </Wrapper>
