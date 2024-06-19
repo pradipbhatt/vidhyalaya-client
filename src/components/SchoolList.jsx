@@ -35,11 +35,11 @@ const SchoolList = () => {
     const ScrollableBox = styled(Box)({
         overflowY: 'auto',
         width: '100%',
-        maxHeight: 'calc(100vh -0px)', // Adjust as necessary based on your layout
-        padding: '0 80px', // Added padding on left and right
+        maxHeight: 'calc(100vh - 64px)', // Adjust based on your layout, e.g., height of navbar
+        padding: '0 16px',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center', // Center aligns items
+        alignItems: 'center',
     });
 
     const StyledCard = styled(Card)({
