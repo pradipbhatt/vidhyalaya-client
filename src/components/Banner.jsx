@@ -6,9 +6,23 @@ const Banner = () => {
   const [selectedSchool, setSelectedSchool] = useState('');
   const navigate = useNavigate();
 
+  // Mapping of school names to their corresponding IDs
+  const schoolMap = {
+    "Radiant Secondary School": 1,
+    "LBA": 2,
+    "SPA": 3,
+    "Sadharan mavi": 4,
+    "Morning Glory": 5,
+  };
+
   const handleFind = () => {
     if (selectedSchool) {
-      navigate(`/schools/?school=${encodeURIComponent(selectedSchool)}`);
+      const schoolId = schoolMap[selectedSchool];
+      if (schoolId) {
+        navigate(`/schools/${schoolId}`);
+      } else {
+        alert('Please select a valid school.');
+      }
     }
   };
 

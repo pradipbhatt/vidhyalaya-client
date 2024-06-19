@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -10,6 +10,7 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
     author: currentUserName, // Initialize with logged-in user's name
   });
   const [expandedPostIds, setExpandedPostIds] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -34,14 +35,22 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     try {
-      await axios.post('https://vidhyalaya-backend.onrender.com/api/post', formData);
-      toast.success('Post created successfully!');
-      setFormData({ title: '', content: '', author: currentUserName }); // Reset form fields with currentUserName
-      fetchPosts();
+      const response = await axios.post('https://vidhyalaya-backend.onrender.com/api/post', formData);
+      if (response.status === 201) {
+        toast.success('Post created successfully!');
+        setFormData({ title: '', content: '', author: currentUserName }); // Reset form fields with currentUserName
+        fetchPosts();
+      } else {
+        toast.error('Failed to create post');
+      }
     } catch (error) {
       console.error('Error submitting form:', error.message);
       toast.error(`Failed to submit form: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -53,47 +62,51 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
 
   return (
     <div className="flex flex-col items-center p-4 overflow-y-auto h-screen bg-gray-100 mt-20">
-      <form onSubmit={handleSubmit} className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4">
+      <div className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4">
         <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
-        <div className="grid grid-cols-1 gap-4">
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Title"
-            className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
-            required
-          />
-          <textarea
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            placeholder="Content"
-            rows="4"
-            className="border border-gray-300 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
-            required
-          ></textarea>
-          <input
-            type="text"
-            name="author"
-            value={formData.author}
-            onChange={handleChange}
-            placeholder="Author"
-            className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
-            required
-            disabled // Prevent editing author name directly
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-600 transition duration-300"
-          >
-            Submit Post
-          </button>
-        </div>
-      </form>
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto"> {/* Center align and limit width */}
+          <div className="grid grid-cols-1 gap-4">
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Title"
+              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
+              required
+            />
+            <textarea
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              placeholder="Content"
+              rows="4"
+              className="border border-gray-300 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
+              required
+            ></textarea>
+            <input
+              type="text"
+              name="author"
+              value={formData.author}
+              onChange={handleChange}
+              placeholder="Author"
+              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
+              required
+            />
+            <button
+              type="submit"
+              className={`bg-blue-500 text-white rounded-md px-4 py-2 w-full ${
+                isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-600'
+              } transition duration-300`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit Post'}
+            </button>
+          </div>
+        </form>
+      </div>
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="grid grid-cols-1 gap-4 w-full max-w-screen-lg">
+      <div className="grid grid-cols-1 gap-4 w-full max-w-screen-lg mt-8">
         {posts.length === 0 ? (
           <p className="text-center text-gray-500">Loading...</p>
         ) : (

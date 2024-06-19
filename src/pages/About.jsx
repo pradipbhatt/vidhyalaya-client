@@ -38,57 +38,57 @@ const developers = [
 const About = () => {
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-8 overflow-y-auto mt-10 font-serif">
-        <div className="container mx-auto text-left px-6 sm:px-20"> {/* Added sm:px-20 for larger screens */}
-          {/* First Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <img src="https://www.pngall.com/wp-content/uploads/8/Student-PNG-Clipart.png" alt="Team Image" className="mx-auto w-32 md:w-48 rounded-lg shadow-lg" />
-            </div>
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-teal-500 mt-8 md:mt-0">About Our Team and Project</h2>
-              <p className="text-base lg:text-lg text-gray-800 mt-4">
-                We are Team Vidhyalaya from Far Western University. This project is our minor project, where we compare two schools and show their relative data to the users. Additionally, we include all the relevant resources required for students when planning their undergraduate career.
-              </p>
-            </div>
+    <div className="min-h-screen bg-gray-100 py-8 overflow-y-auto mt-10 font-serif">
+      <div className="container mx-auto text-left px-6 sm:px-20"> {/* Added sm:px-20 for larger screens */}
+        {/* First Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="bg-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-101 hover:shadow-2xl">
+            <img src="https://clipart-library.com/images_k/teamwork-transparent-background/teamwork-transparent-background-24.png" alt="Team Image" className="w-full h-58 object-cover rounded-t-lg" />
           </div>
-
-          {/* Second Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-8">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-teal-500">Objectives</h2>
-              <ul className="list-disc list-inside text-base lg:text-lg text-gray-800 mt-4">
-                <li>Compare the colleges.</li>
-                <li>Provide relevant resources for students.</li>
-                <li>Help students plan their undergraduate career.</li>
-              </ul>
-            </div>
-            <div>
-              <img src="https://www.pngall.com/wp-content/uploads/8/University-Student-PNG-Free-Image.png" alt="Objectives Image" className="mx-auto w-32 md:w-48 rounded-lg shadow-lg" />
-            </div>
+          <div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-teal-500 mt-8 md:mt-0">About Our Team and Project</h2>
+            <p className="text-base lg:text-lg text-gray-800 mt-4">
+              We are Team Vidhyalaya from Far Western University. This project is our minor project, where we compare two schools and show their relative data to the users. Additionally, we include all the relevant resources required for students when planning their undergraduate career.
+            </p>
           </div>
-
-          {/* Third Row - Developers */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-            {developers.map((developer, index) => (
-              <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
-                <img src={developer.img} alt={developer.name} className="w-full h-48 object-cover rounded-t-lg" />
-                <div className="p-6">
-                  <h3 className="text-lg lg:text-xl font-bold text-teal-500">{developer.name}</h3>
-                  <p className="text-base lg:text-md text-gray-800 mt-2">{developer.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Contact Us Section */}
-          <ContactUs />
-          
-          {/* Footer */}
-          <Footer />
         </div>
+
+        {/* Second Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-8">
+          <div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-teal-500">Objectives</h2>
+            <ul className="list-disc list-inside text-base lg:text-lg text-gray-800 mt-4">
+              <li>Compare the colleges.</li>
+              <li>Provide relevant resources for students.</li>
+              <li>Help students plan their undergraduate career.</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-101 hover:shadow-2xl">
+            <img src="https://static.vecteezy.com/system/resources/previews/020/962/986/original/software-engineer-graphic-clipart-design-free-png.png" alt="Objectives Image" className="w-full h-68 object-cover rounded-t-lg" />
+          </div>
+        </div>
+
+        {/* Third Row - Developers */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+          {developers.map((developer, index) => (
+            <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-102 hover:shadow-2xl">
+              <img src={developer.img} alt={developer.name} className="w-full h-48 object-cover rounded-t-lg" />
+              <div className="p-6">
+                <h3 className="text-lg lg:text-xl font-bold text-teal-500">{developer.name}</h3>
+                <p className="text-base lg:text-md text-gray-800 mt-2">{developer.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Contact Us Section */}
+        <ContactUs />
+        
+        {/* Footer */}
       </div>
-    </>
+        <Footer />
+    </div>
+  </>
   );
 };
 

@@ -19,6 +19,7 @@ import RadiantSchool from './components/schools/RadiantSchool';
 import Shadharan from './components/schools/Shadharan';
 import MorningGlorySchool from './components/schools/MorningGlorySchool';
 import BlogForm from './components/BlogForm';
+import Admin from './components/Admin';
 
 
 const Container = styled.div`
@@ -44,6 +45,7 @@ function App() {
             <Navbar currentUser={currentUser} />
             <Routes>
               <Route path="/" exact element={<Home />} />
+              <Route path="/admin" exact element={<Admin />} />
               <Route path="/blogs" exact element={<Blogs />} />
               <Route path="/about" exact element={<About />} />
               <Route path="/compare" exact element={<Compare />} />
@@ -53,6 +55,7 @@ function App() {
               {/* <Route path="/entrance" exact element={<Entrance />} /> */}
               <Route path="/contactus" exact element={<ContactUs />} />
               <Route path="/schools" exact element={<SchoolList />} />
+              {/* <Route path="/schoolspage" exact element={<Schoolspage />} /> */}
               <Route path="/schools/2" exact element={<Lba />} />
               <Route path="/schools/1" exact element={<RadiantSchool />} />
               <Route path="/schools/3" exact element={<MorningGlorySchool/>} />

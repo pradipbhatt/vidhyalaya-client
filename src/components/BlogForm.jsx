@@ -39,7 +39,7 @@ const BlogForm = ({ fetchPosts }) => {
       }
     } catch (error) {
       console.error('Error creating post:', error);
-      toast.error('An error occurred');
+      // toast.error('An error occurred');
     } finally {
       setIsSubmitting(false);
     }
