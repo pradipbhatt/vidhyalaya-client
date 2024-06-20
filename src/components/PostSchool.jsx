@@ -8,7 +8,7 @@ const PostSchool = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/postschool');
+        const response = await axios.get('https://vidhyalaya-backend.onrender.com/api/postschool');
         if (response.status === 200) {
           setSchools(response.data); // Assuming response.data is an array of schools
         } else {

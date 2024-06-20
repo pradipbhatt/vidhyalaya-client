@@ -58,7 +58,7 @@ const PostSchoolForm = ({ fetchPosts }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/postschool/', formData);
+      const response = await axios.post('https://vidhyalaya-backend.onrender.com/api/postschool', formData);
       if (response.status === 201) {
         toast.success('Post created successfully!', {
           style: {
