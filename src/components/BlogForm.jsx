@@ -47,7 +47,7 @@ const BlogForm = ({ fetchPosts }) => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center mt-8">
-      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105 mb-4">
+      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-102 mb-4">
         <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <input

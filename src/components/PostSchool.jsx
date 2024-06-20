@@ -27,7 +27,7 @@ const PostSchool = () => {
   return (
     <div className="min-h-screen py-8 mt-60">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mt-60">Posted Schools</h1>
+        <h1 className="text-3xl font-bold text-center mt-60">Schools for +2</h1>
         <div className="overflow-y max-h-screen mt-10">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             {schools.length === 0 ? (

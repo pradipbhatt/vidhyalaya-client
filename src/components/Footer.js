@@ -3,8 +3,8 @@ import logo from '../utils/Images/Logo1.png';
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 p-10 font-sans tracking-wide">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gray-900 p-6 font-sans text-white mt-auto">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="lg:flex lg:items-center">
           <a href="/">
             <img src={logo} alt="Project Logo" className="w-52" />
@@ -44,38 +44,38 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold mb-6 text-white">Contact Us</h4>
-          <ul className="space-y-4">
+          <h4 className="text-lg font-semibold mb-4 text-white">Contact Us</h4>
+          <ul className="space-y-2">
             <li>
-              <a href="mailto:contact@example.com" className="text-gray-300 hover:text-white text-sm">Email</a>
+              <a href="mailto:contact@example.com" className="text-gray-300 hover:text-white text-sm">Email: <span className="text-blue-500">pradip10bhatt@gmail.com</span></a>
             </li>
             <li>
-              <a href="tel:+1234567890" className="text-gray-300 hover:text-white text-sm">Phone</a>
+              <a href="tel:+1234567890" className="text-gray-300 hover:text-white text-sm">Phone: <span className="text-blue-500">+1 (234)9810652734</span></a>
             </li>
             <li>
-              <span className="text-gray-300 text-sm">1234 Address St, City, Country</span>
+              <span className="text-gray-300 text-sm">Janaki Tole-Adarsh Marg, Mahendranagar, Nepal</span>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold mb-6 text-white">Information</h4>
-          <ul className="space-y-4">
+          <h4 className="text-lg font-semibold mb-4 text-white">Information</h4>
+          <ul className="space-y-2">
             <li>
               <a href="/about" className="text-gray-300 hover:text-white text-sm">About Us</a>
             </li>
             <li>
-              <a href="/terms" className="text-gray-300 hover:text-white text-sm">Terms &amp; Conditions</a>
+              <a href="/" className="text-gray-300 hover:text-white text-sm">Terms &amp; Conditions</a>
             </li>
             <li>
-              <a href="/privacy" className="text-gray-300 hover:text-white text-sm">Privacy Policy</a>
+              <a href="/" className="text-gray-300 hover:text-white text-sm">Privacy Policy</a>
             </li>
           </ul>
         </div>
       </div>
 
-      <p className='text-gray-300 text-sm mt-10'>© 2024 <a href='https://yourwebsite.com/' target='_blank'
-        rel="noopener noreferrer" className="hover:underline mx-1">Your Website</a> All Rights Reserved.
+      <p className='text-gray-300 text-sm mt-8 text-center'>© 2024 <a href='https://pradipbhatt.com.np' target='_blank'
+        rel="noopener noreferrer" className="hover:underline mx-1">Vidhyalaya</a> All Rights Reserved.
       </p>
     </footer>
   );

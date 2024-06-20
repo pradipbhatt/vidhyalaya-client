@@ -1,109 +1,104 @@
-import React from 'react';
-import { Typography, Box, Grid, Card, CardContent, CardMedia, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { styled } from '@mui/system';
-
-const schools = [
-    {
-        id: 1,
-        image: 'https://wikiwandv2-19431.kxcdn.com/_next/image?url=https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/RHSSBKN.jpg/640px-RHSSBKN.jpg&w=640&q=50',
-        name: 'Radiant Secondary School',
-        description: 'Radiant Secondary School was founded in 2057 BS (2000 AD) by some academicians...'
-    },
-    {
-        id: 2,
-        image: 'https://i.ytimg.com/vi/KjbyfK_OpRY/maxresdefault.jpg',
-        name: 'Little Buddha Academy',
-        description: 'Little Buddha Academy was founded in 2057 BS (2000 AD) by some academicians...'
-    },
-    {
-        id: 3,
-        image: 'https://www.collegenp.com/uploads/2018/10/Morning-Glory-Secondary-School-1.jpg',
-        name: 'Morning Glory Secondary School',
-        description: 'Morning Glory was founded in 2057 BS (2000 AD) by some academicians...'
-    },
-    {
-        id: 4,
-        image: 'https://scontent.fdhi1-1.fna.fbcdn.net/v/t39.30808-6/411190576_222019397605192_564528320247164097_n.jpg?stp=dst-jpg_s600x600&_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=CgBihwJfPDkQ7kNvgH7olVf&_nc_ht=scontent.fdhi1-1.fna&oh=00_AYDVL68JCTvNenikPIwHQ2aPJH_yoyRE-pyGFSacsm9KlA&oe=6673D782',
-        name: 'Shadharan Secondary School',
-        description: 'Shadharan was founded in 2057 BS (2000 AD) by some academicians...'
-    },
-    // Repeat as necessary
-];
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const SchoolList = () => {
-    const ScrollableBox = styled(Box)({
-        overflowY: 'auto',
-        width: '100%',
-        maxHeight: 'calc(100vh - 64px)', // Adjust based on your layout, e.g., height of navbar
-        padding: '0 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    });
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const StyledCard = styled(Card)({
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)',
-    });
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await axios.get('https://vidhyalaya-backend.onrender.com/api/postschool');
+        if (response.status === 200) {
+          setSchools(response.data); // Assuming response.data is an array of schools
+        } else {
+          console.error('Failed to fetch schools');
+        }
+      } catch (error) {
+        console.error('Error fetching schools:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const StyledCardMedia = styled(CardMedia)({
-        height: '140px',
-        objectFit: 'cover',
-    });
+    fetchSchools();
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-    const StyledCardContent = styled(CardContent)({
-        flexGrow: 1,
-    });
-
-    const StyledButton = styled(Button)({
-        marginTop: 'auto',
-    });
-
-    return (
-        <ScrollableBox py={5}>
-            <Typography variant="h4" textAlign="center" mb={5}>
-                Find Your Best School !!!
-            </Typography>
-            <Grid container spacing={3} justifyContent="center">
-                {schools.map((school) => (
-                    <Grid item xs={12} sm={6} md={4} key={school.id}>
-                        <StyledCard>
-                            <StyledCardMedia
-                                component="img"
-                                image={school.image}
-                                alt={school.name}
-                            />
-                            <StyledCardContent>
-                                <Typography variant="h5" component="div">
-                                    {school.name}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {school.description}
-                                </Typography>
-                                <Box mt={2}>
-                                    {Array(4).fill().map((_, i) => (
-                                        <span key={i} style={{ color: 'gold' }}>⭐</span>
-                                    ))}
-                                </Box>
-                            </StyledCardContent>
-                            <StyledButton
-                                variant="outlined"
-                                color="primary"
-                                component={Link}
-                                to={`/schools/${school.id}`}
-                            >
-                                Read More
-                            </StyledButton>
-                        </StyledCard>
-                    </Grid>
-                ))}
-            </Grid>
-        </ScrollableBox>
-    );
+  return (
+    <div className="min-h-screen overflow-y-auto">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mt-60">Schools for +2</h1>
+        <div className="overflow-y max-h-screen mt-10">
+          <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
+            {schools.length === 0 ? (
+              <p className="text-center">No schools found.</p>
+            ) : (
+              schools.map((school) => (
+                <div key={school._id} className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+                  <img
+                    src={school.image}
+                    alt={school.title}
+                    className="w-full h-48 object-cover object-center"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-xl font-bold mb-2">{school.title}</h2>
+                    <p className="text-gray-700 mb-2">{school.description}</p>
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Rank:</span> {school.rank}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Courses:</span> {school.courses}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Infrastructure:</span> {school.infrastructure}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Contact Phone:</span> {school.contact.phone}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Location:</span> {school.location.lat}, {school.location.lng}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Total Alumni:</span> {school.alumniTotal}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Alumni Engineers:</span> {school.alumniEngineers}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Alumni Doctors:</span> {school.alumniDoctors}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Teachers:</span> {school.teachers}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Teacher Qualifications:</span> {school.teacherQualifications}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-bold">Passout Rate:</span> {school.passoutRate}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+                /* Hide scrollbar for Chrome, Safari and Opera */
+                div::-webkit-scrollbar {
+                    display: none;
+                }
+            `}</style>
+    </div>
+  );
 };
 
 export default SchoolList;
