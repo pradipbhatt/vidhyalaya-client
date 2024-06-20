@@ -50,7 +50,7 @@ function Footer() {
               <a href="mailto:contact@example.com" className="text-gray-300 hover:text-white text-sm">Email: <span className="text-blue-500">pradip10bhatt@gmail.com</span></a>
             </li>
             <li>
-              <a href="tel:+1234567890" className="text-gray-300 hover:text-white text-sm">Phone: <span className="text-blue-500">+1 (234)9810652734</span></a>
+              <a href="tel:+1234567890" className="text-gray-300 hover:text-white text-sm">Phone: <span className="text-blue-500">+977-9810652734</span></a>
             </li>
             <li>
               <span className="text-gray-300 text-sm">Janaki Tole-Adarsh Marg, Mahendranagar, Nepal</span>
