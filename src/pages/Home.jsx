@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar"; // Import Navbar component
 import Banner from "../components/Banner";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 import BlogForm from "../components/BlogForm";
 import Testimonials from "../components/Testimonials";
 import SchoolList from "../components/SchoolList";
@@ -16,7 +16,7 @@ const Home = () => {
           <Testimonials />
           {/* <BlogForm /> */}
           <SchoolList />
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>
