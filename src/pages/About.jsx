@@ -81,8 +81,6 @@ const About = () => {
           ))}
         </div>
 
-        {/* Contact Us Section */}
-        <ContactUs />
         
         {/* Footer */}
       </div>

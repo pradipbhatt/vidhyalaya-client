@@ -39,9 +39,10 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
+  <>
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg mt-20">
         <h1 className="text-2xl font-bold text-center mb-6">Contact Us</h1>
         <form ref={form} onSubmit={sendEmail}>
           <div className="mb-4">
@@ -95,6 +96,7 @@ const ContactUs = () => {
         </form>
       </div>
     </div>
+  </>
   );
 };
 

@@ -49,6 +49,7 @@ function App() {
               <Route path="/blogs" exact element={<Blogs />} />
               <Route path="/about" exact element={<About />} />
               <Route path="/compare" exact element={<Compare />} />
+              <Route path="/contact" exact element={<ContactUs />} />
               <Route path="/testimonials" exact element={<Testimonials />} />
               <Route path="/chat" exact element={<Chat />} />
               <Route path="/profile" exact element={<Profile />} />

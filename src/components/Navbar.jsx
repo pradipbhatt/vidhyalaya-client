@@ -62,6 +62,7 @@ const Navbar = () => {
               <NavLink to="/compare" text="Compare" />
               <NavLink to="/blogs" text="Blogs" />
               <NavLink to="/chat" text="Chat" />
+              <NavLink to="/contact" text="Contact Us" />
             </div>
           </div>
           <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -111,6 +112,7 @@ const Navbar = () => {
           <NavLinkMobile to="/compare" text="Compare" toggleMenu={toggleMenu} />
           <NavLinkMobile to="/blogs" text="Blogs" toggleMenu={toggleMenu} />
           <NavLinkMobile to="/chat" text="Chat" toggleMenu={toggleMenu} />
+          <NavLinkMobile to="/contact" text="Contact Us" toggleMenu={toggleMenu} />
         </div>
       </div>
     </div>
