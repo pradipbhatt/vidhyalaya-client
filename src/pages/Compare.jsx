@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'react-toastify/dist/ReactToastify.css';
+// import './Compare.css'; // Import custom CSS for scrollbar
 
 // Set the custom icon for the markers
 const customIcon = new L.Icon({
@@ -54,7 +55,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="font-serif text-emerald-900 p-5 mb-10 overflow-y-scroll max-h-[calc(100vh-10px)] lg:mx-20">
+    <div className="font-serif text-emerald-900 p-5 mb-10 max-h-[calc(100vh-10px)] lg:mx-20 overflow-y-scroll hide-scrollbar">
       <h1 className="text-center mb-10 font-cursive">Compare Schools</h1>
       <div className="flex flex-col md:flex-row items-center my-10 gap-5">
         {/* First School Selection */}
@@ -124,11 +125,6 @@ const Compare = () => {
                   <td className="border p-2">RS {school1.prices.class12}</td>
                   <td className="border p-2">RS {school2.prices.class12}</td>
                 </tr>
-                {/* <tr>
-                  <td className="border p-2">Description</td>
-                  <td className="border p-2">{school1.description}</td>
-                  <td className="border p-2">{school2.description}</td>
-                </tr> */}
                 <tr>
                   <td className="border p-2">Infrastructure</td>
                   <td className="border p-2">{school1.infrastructure}</td>
@@ -174,11 +170,6 @@ const Compare = () => {
                   <td className="border p-2">{school1.teachers}</td>
                   <td className="border p-2">{school2.teachers}</td>
                 </tr>
-                {/* <tr>
-                  <td className="border p-2">Teacher Qualifications</td>
-                  <td className="border p-2">{school1.teacherQualifications}</td>
-                  <td className="border p-2">{school2.teacherQualifications}</td>
-                </tr> */}
                 <tr>
                   <td className="border p-2">Passout Rate</td>
                   <td className="border p-2">{school1.passoutRate}</td>
