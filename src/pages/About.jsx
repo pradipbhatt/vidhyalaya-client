@@ -69,7 +69,7 @@ const About = () => {
         </div>
 
         {/* Third Row - Developers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 mb-10">
           {developers.map((developer, index) => (
             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-102 hover:shadow-2xl">
               <img src={developer.img} alt={developer.name} className="w-full h-48 object-cover rounded-t-lg" />
