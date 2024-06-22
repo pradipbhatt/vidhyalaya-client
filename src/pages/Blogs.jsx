@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 
-const Blogs = ({ currentUserEmail, currentUserName }) => {
+const Blogs = () => {
   const [posts, setPosts] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    author: currentUserName, // Initialize with logged-in user's name
+    author: '', // Initialize author field
   });
   const [expandedPostIds, setExpandedPostIds] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Fetch current user data from Redux state
+  const { currentUser } = useSelector((state) => state.user);
+
   useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        ...formData,
+        author: `${currentUser.name} (${currentUser.email})`, // Populate author field with current user's name and email
+      });
+    }
     fetchPosts();
-  }, []);
+  }, [currentUser]); // Trigger effect when currentUser changes
 
   const fetchPosts = async () => {
     try {
@@ -41,7 +51,7 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
       const response = await axios.post('https://vidhyalaya-backend.onrender.com/api/post', formData);
       if (response.status === 201) {
         toast.success('Post created successfully!');
-        setFormData({ title: '', content: '', author: currentUserName }); // Reset form fields with currentUserName
+        setFormData({ title: '', content: '', author: formData.author }); // Reset form fields with current user's name and email
         fetchPosts();
       } else {
         toast.error('Failed to create post');
@@ -64,7 +74,7 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
     <div className="flex flex-col items-center p-4 overflow-y-auto h-screen bg-gray-100 mt-20">
       <div className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4">
         <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto"> {/* Center align and limit width */}
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="grid grid-cols-1 gap-4">
             <input
               type="text"
@@ -88,10 +98,9 @@ const Blogs = ({ currentUserEmail, currentUserName }) => {
               type="text"
               name="author"
               value={formData.author}
-              onChange={handleChange}
-              placeholder="Author"
-              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
-              required
+              readOnly // Make the author field read-only
+              className="border border-gray-300 rounded-md px-3 py-2 w-full bg-gray-100"
+              disabled
             />
             <button
               type="submit"
