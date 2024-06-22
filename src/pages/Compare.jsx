@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { ToastContainer, toast } from 'react-toastify';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'react-toastify/dist/ReactToastify.css';
+
+// Set the custom icon for the markers
+const customIcon = new L.Icon({
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 const Compare = () => {
   const [schools, setSchools] = useState([]);
@@ -22,7 +34,6 @@ const Compare = () => {
         setSchools(data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Handle error as needed
       }
     };
 
@@ -43,7 +54,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="font-serif text-emerald-900 p-5 mb-10 overflow-y-scroll max-h-[calc(100vh-10px)]">
+    <div className="font-serif text-emerald-900 p-5 mb-10 overflow-y-scroll max-h-[calc(100vh-10px)] lg:mx-20">
       <h1 className="text-center mb-10 font-cursive">Compare Schools</h1>
       <div className="flex flex-col md:flex-row items-center my-10 gap-5">
         {/* First School Selection */}
@@ -104,20 +115,20 @@ const Compare = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="border p-2">Price (Class 11)</td>
+                  <td className="border p-2">Fee (Class 11)</td>
                   <td className="border p-2">RS {school1.prices.class11}</td>
                   <td className="border p-2">RS {school2.prices.class11}</td>
                 </tr>
                 <tr>
-                  <td className="border p-2">Price (Class 12)</td>
+                  <td className="border p-2">Fee (Class 12)</td>
                   <td className="border p-2">RS {school1.prices.class12}</td>
                   <td className="border p-2">RS {school2.prices.class12}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td className="border p-2">Description</td>
                   <td className="border p-2">{school1.description}</td>
                   <td className="border p-2">{school2.description}</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td className="border p-2">Infrastructure</td>
                   <td className="border p-2">{school1.infrastructure}</td>
@@ -163,11 +174,11 @@ const Compare = () => {
                   <td className="border p-2">{school1.teachers}</td>
                   <td className="border p-2">{school2.teachers}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td className="border p-2">Teacher Qualifications</td>
                   <td className="border p-2">{school1.teacherQualifications}</td>
                   <td className="border p-2">{school2.teacherQualifications}</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td className="border p-2">Passout Rate</td>
                   <td className="border p-2">{school1.passoutRate}</td>
@@ -210,10 +221,10 @@ const Compare = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
-              <Marker position={[parseFloat(school1.location.lat), parseFloat(school1.location.lng)]}>
+              <Marker position={[parseFloat(school1.location.lat), parseFloat(school1.location.lng)]} icon={customIcon}>
                 <Popup>{school1.title}</Popup>
               </Marker>
-              <Marker position={[parseFloat(school2.location.lat), parseFloat(school2.location.lng)]}>
+              <Marker position={[parseFloat(school2.location.lat), parseFloat(school2.location.lng)]} icon={customIcon}>
                 <Popup>{school2.title}</Popup>
               </Marker>
             </MapContainer>
@@ -222,7 +233,7 @@ const Compare = () => {
       )}
 
       {/* Toast Container */}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar newestOnTop closeOnClick rtl pauseOnFocusLoss draggable pauseOnHover />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };
