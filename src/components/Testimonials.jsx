@@ -12,7 +12,7 @@ const Testimonials = () => {
       rating: 5
     },
     {
-      name: 'HRK',
+      name: 'Harendra Raj Kalauni',
       title: 'Head of Department',
       company: 'Far Western University',
       img: 'https://scontent.fktm1-1.fna.fbcdn.net/v/t1.6435-9/165774678_3842273712535120_5532216151641677450_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=0_4jRJbWXFQQ7kNvgGWfYn2&_nc_ht=scontent.fktm1-1.fna&oh=00_AYC1n23PjxYtMpHYLP9Le4OR0N7iYVHQbP5eCOoxKeGGjw&oe=669A165B',
@@ -21,7 +21,7 @@ const Testimonials = () => {
       rating: 4
     },
     {
-      name: 'Rishi Kumar Marseni',
+      name: 'Rishi K. Marseni',
       title: 'Team Advisor',
       company: 'Far Western University',
       img: 'https://scontent.fktm1-1.fna.fbcdn.net/v/t39.30808-6/275320881_5097818906903803_1471185847402786064_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=6Z7LpVaEKT8Q7kNvgHQZd6Q&_nc_ht=scontent.fktm1-1.fna&oh=00_AYDFsqpXVpqHR4USdNJaOXvQjyJahYqcceOGMKX85o5DtA&oe=66787DBE',
