@@ -21,47 +21,56 @@ const Banner = () => {
       if (schoolId) {
         navigate(`/schools/${schoolId}`);
       } else {
-        alert('Please select a valid school.');
+        alert('कृपया एक मान्य स्कूल छान्नुहोस्।');
       }
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-4 bg-gray-100">
-      <div className="container mx-auto text-left">
+    <div
+      className="flex flex-col items-center justify-center h-screen px-4"
+      style={{
+        backgroundImage: `url(https://ak.picdn.net/shutterstock/videos/1057572358/thumb/1.jpg)`,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust opacity here
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundBlendMode: 'overlay',
+      }}
+    >
+      <div className="container mx-auto text-center">
         <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-teal-500 mt-16 md:mt-24 lg:mt-32">
-          Let's <br />
+          हामी कलेज <br />
           <span className="text-black">
             <Typewriter
               options={{
-                strings: ['Compare ', 'Connect ', 'Discover '],
+                strings: [',खोज्न मदत गर्छौं ', 'तुलना गर्न मदत गर्छौं, '],
                 autoStart: true,
                 loop: true,
               }}
             />
           </span>{' '}
           <br />
-          <span className="text-teal-500">the best</span>
+          <span className="text-teal-500">Best</span>
         </h1>
         <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-black mt-4 mb-8">
-          schools
+         Colleges for +2 in Far west ,Nepal. 
         </h2>
         <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
           <select
             className="p-3 bg-teal-500 text-white font-semibold rounded-lg outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-1/2"
             onChange={(e) => setSelectedSchool(e.target.value)}
           >
-            <option value="">Select a school</option>
+            <option value="">कलेज छान्नुहोस्</option>
             <option value="Radiant Secondary School">Radiant Secondary School</option>
             <option value="LBA">LBA</option>
             <option value="SPA">SPA</option>
-            <option value="Sadharan mavi">Sadharan mavi</option>
+            <option value="Sadharan mavi">Shadharan S. School</option>
             <option value="Morning Glory">Morning Glory</option>
             {/* Add more options as needed */}
           </select>
           <input
             type="text"
-            placeholder="Enter School Name"
+            placeholder="स्कूलको नाम प्रविष्ट गर्नुहोस्"
             value={selectedSchool}
             onChange={(e) => setSelectedSchool(e.target.value)}
             className="p-3 text-gray-600 outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-full"
@@ -78,7 +87,7 @@ const Banner = () => {
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
             }}
           >
-            Find
+            खोज्नुहोस्
           </button>
         </div>
       </div>
