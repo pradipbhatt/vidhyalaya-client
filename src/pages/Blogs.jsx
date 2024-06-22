@@ -72,7 +72,7 @@ const Blogs = () => {
 
   return (
     <div className="flex flex-col items-center p-4 overflow-y-auto h-screen bg-gray-100 mt-20 relative">
-      <div className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4 z-10 relative">
+      <div className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4 z-1 relative">
         <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
         {/* Blurry background with image overlay inside the form */}
         <div
@@ -85,7 +85,7 @@ const Blogs = () => {
             borderRadius: '1rem',
           }}
         ></div>
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto relative z-10 transform hover:scale-105 transition duration-300 shadow-lg rounded-lg p-6">
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto relative z-1 transform hover:scale-105 transition duration-300 shadow-lg rounded-lg p-6">
           <div className="grid grid-cols-1 gap-4">
             <input
               type="text"

@@ -112,7 +112,7 @@ const Navbar = () => {
           <NavLinkMobile to="/compare" text="Compare" toggleMenu={toggleMenu} />
           <NavLinkMobile to="/blogs" text="Blogs" toggleMenu={toggleMenu} />
           <NavLinkMobile to="/chat" text="Chat" toggleMenu={toggleMenu} />
-          <NavLinkMobile to="/contact" text="Contact Us" toggleMenu={toggleMenu} />
+          <NavLinkMobile to="/contact" text="Contact" toggleMenu={toggleMenu} />
         </div>
       </div>
     </div>

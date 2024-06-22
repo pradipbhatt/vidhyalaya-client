@@ -43,7 +43,7 @@ const Banner = () => {
           <span className="text-black">
             <Typewriter
               options={{
-                strings: [',खोज्न मदत गर्छौं ', 'तुलना गर्न मदत गर्छौं, '],
+                strings: ['खोज्न मदत गर्छौं ', 'तुलना गर्न मदत गर्छौं '],
                 autoStart: true,
                 loop: true,
               }}
