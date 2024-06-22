@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MenuRounded, ClearRounded } from '@mui/icons-material';
-import { Avatar, Menu, MenuItem, Typography, Switch, Box } from '@mui/material';
+import { Avatar, Menu, MenuItem, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, fetchUserData } from '../redux/reducers/userSlice';
 import { Link } from 'react-router-dom';
@@ -11,8 +11,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const currentUser = useSelector((state) => state.user.currentUser);
-  const [darkMode, setDarkMode] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUserData());
@@ -31,35 +29,12 @@ const Navbar = () => {
     handleClose();
   };
 
-  const handleModeChange = () => {
-    setDarkMode(!darkMode);
-    console.log('Mode changed');
-  };
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Function to handle scroll event
-  const handleScroll = () => {
-    const offset = window.scrollY;
-    if (offset > 100) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
-
-  // Add scroll event listener
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
-    <div className={`bg-white shadow-md fixed w-full top-0 z-10 transition-all duration-300 ${scrolled ? 'bg-gray-100 shadow-md' : 'bg-white shadow-none'}`}>
+    <div className="bg-white shadow-md fixed w-full top-0 z-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -90,22 +65,6 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="ml-3 relative">
-              <Switch
-                checked={darkMode}
-                onChange={handleModeChange}
-                className={`${
-                  darkMode ? 'bg-gray-600' : 'bg-gray-200'
-                } relative inline-flex items-center h-6 rounded-full w-11`}
-              >
-                <span className="sr-only">Enable dark mode</span>
-                <span
-                  className={`${
-                    darkMode ? 'translate-x-6' : 'translate-x-1'
-                  } inline-block w-4 h-4 transform bg-white rounded-full`}
-                />
-              </Switch>
-            </div>
             {currentUser ? (
               <div className="ml-3 relative">
                 <Avatar onClick={handleClick}>{currentUser.name.charAt(0)}</Avatar>
