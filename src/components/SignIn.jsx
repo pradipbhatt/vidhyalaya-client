@@ -43,7 +43,7 @@ const SignIn = () => {
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-primary mb-4">Welcome to Vidhyalaya👋</h2>
+        <h2 className="text-3xl font-bold text-primary mb-4">Welcome to Vidhyalaya 🩵</h2>
         <p className="text-base text-secondary">Please login with your details here</p>
       </div>
       <div className="mt-8 space-y-6">
