@@ -47,7 +47,7 @@ function Footer() {
           <h4 className="text-lg font-semibold mb-4 text-white">Contact Us</h4>
           <ul className="space-y-2">
             <li>
-              <a href="mailto:contact@example.com" className="text-gray-300 hover:text-white text-sm">Email: <span className="text-blue-500">pradip10bhatt@gmail.com</span></a>
+              <a href="mailto:contact@example.com" className="text-gray-300 hover:text-white text-sm">Email: <span className="text-blue-500">vidhyalaya.cse@fwu.edu.np</span></a>
             </li>
             <li>
               <a href="tel:+1234567890" className="text-gray-300 hover:text-white text-sm">Phone: <span className="text-blue-500">+977-9810652734</span></a>
