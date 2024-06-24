@@ -42,7 +42,7 @@ const ContactUs = () => {
   <>
       <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg mt-20">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg mt-10">
         <h1 className="text-2xl font-bold text-center mb-6">Contact Us</h1>
         <form ref={form} onSubmit={sendEmail}>
           <div className="mb-4">
