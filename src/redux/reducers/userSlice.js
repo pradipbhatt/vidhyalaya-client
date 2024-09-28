@@ -6,7 +6,7 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (_, { 
   try {
     const token = localStorage.getItem('vidhyalaya-app-token');
     if (token) {
-      const response = await axios.get('https://vidhyalaya-backend.onrender.com/api/user', {
+      const response = await axios.get('http://localhost:8081/api/user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

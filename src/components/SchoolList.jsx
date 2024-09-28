@@ -8,7 +8,7 @@ const SchoolList = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('https://vidhyalaya-backend.onrender.com/api/postschool');
+        const response = await axios.get('http://localhost:8081/api/postschool');
         if (response.status === 200) {
           setSchools(response.data); // Assuming response.data is an array of schools
         } else {
@@ -30,7 +30,9 @@ const SchoolList = () => {
         <h1 className="text-3xl font-bold text-center mt-60">Schools for +2</h1>
         <div className="overflow-y max-h-screen mt-10">
           <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
-            {schools.length === 0 ? (
+            {loading ? (
+              <p className="text-center">Loading...</p>
+            ) : schools.length === 0 ? (
               <p className="text-center">No schools found.</p>
             ) : (
               schools.map((school) => (
@@ -39,6 +41,10 @@ const SchoolList = () => {
                     src={school.image}
                     alt={school.title}
                     className="w-full h-48 object-cover object-center"
+                    onError={(e) => {
+                      e.target.onerror = null; // Prevent infinite fallback loop
+                      e.target.src = 'path/to/fallback-image.jpg'; // Set a fallback image
+                    }}
                   />
                   <div className="p-4">
                     <h2 className="text-xl font-bold mb-2">{school.title}</h2>
@@ -91,12 +97,14 @@ const SchoolList = () => {
           </div>
         </div>
       </div>
-      <style jsx>{`
-                /* Hide scrollbar for Chrome, Safari and Opera */
-                div::-webkit-scrollbar {
-                    display: none;
-                }
-            `}</style>
+      <style>
+        {`
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}
+      </style>
     </div>
   );
 };

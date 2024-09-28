@@ -27,7 +27,7 @@ const Compare = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://vidhyalaya-backend.onrender.com/api/postschool');
+        const response = await fetch('http://localhost:8081/api/postschool');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

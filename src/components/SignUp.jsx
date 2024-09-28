@@ -1,45 +1,17 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import TextInput from "./TextInput";
-import Button from "./Button";
-import { UserSignUp } from "../api";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../redux/reducers/userSlice";
-
-const Container = styled.div`
-  width: 90%;
-  max-width: 500px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-  border-radius: 8px;
-  background-color: ${({ theme }) => theme.bg_secondary};
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-`;
-const Title = styled.div`
-  font-size: 30px;
-  font-weight: 800;
-  color: ${({ theme }) => theme.text_primary};
-`;
-
-const Span = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary + 90};
-`;
+import axios from "axios";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("John Doe"); // Default name
+  const [email, setEmail] = useState("john.doe@example.com"); // Default email
+  const [password, setPassword] = useState("password123"); // Default password
+  const [registrationNumber, setRegistrationNumber] = useState("REG123456"); // Default registration number
+  const [userImage, setUserImage] = useState("https://example.com/path/to/image.jpg"); // Default user image URL
 
   const validateInputs = () => {
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !registrationNumber || !userImage) {
       alert("Please fill in all fields");
       return false;
     }
@@ -51,16 +23,16 @@ const SignUp = () => {
     setButtonDisabled(true);
     if (validateInputs()) {
       try {
-        const res = await UserSignUp({ name, email, password });
-        if (res && res.data) {
-          console.log('Response:', res);
-          dispatch(loginSuccess(res.data));
-          alert("Account Created Successfully");
-        } else {
-          throw new Error("Invalid response from server");
-        }
+        const res = await axios.post("http://localhost:8081/api/user/signup", {
+          fullname: name,
+          email,
+          password,
+          registrationNumber,
+          userImage
+        });
+        alert("Account Created Successfully");
+        console.log("Response:", res.data);
       } catch (err) {
-        console.error('Error:', err);
         alert(err.response?.data?.message || err.message);
       } finally {
         setLoading(false);
@@ -73,45 +45,58 @@ const SignUp = () => {
   };
 
   return (
-    <Container>
-      <div>
-        <Title>Create New Account 👋</Title>
-        <Span>Please enter details to create a new account</Span>
+    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-bold text-gray-800">Create New Account 👋</h2>
+        <p className="text-gray-600">Please enter your details to create a new account</p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          flexDirection: "column",
-        }}
-      >
-        <TextInput
-          label="Full name"
-          placeholder="Enter your full name"
+      <div className="space-y-4">
+        <input
+          type="text"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Full Name"
           value={name}
-          handelChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
-        <TextInput
-          label="Email Address"
-          placeholder="Enter your email address"
+        <input
+          type="email"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Email Address"
           value={email}
-          handelChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <TextInput
-          label="Password"
-          placeholder="Enter your password"
-          password
+        <input
+          type="password"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Password"
           value={password}
-          handelChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Button
-          text="SignUp"
+        <input
+          type="text"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Registration Number"
+          value={registrationNumber}
+          onChange={(e) => setRegistrationNumber(e.target.value)}
+        />
+        <input
+          type="url"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="User Image URL"
+          value={userImage}
+          onChange={(e) => setUserImage(e.target.value)}
+        />
+        <button
           onClick={handleSignUp}
-          isLoading={loading}
-          isDisabled={buttonDisabled}
-        />
+          disabled={buttonDisabled}
+          className={`w-full p-3 mt-4 text-white bg-blue-600 rounded-md focus:outline-none ${
+            buttonDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+          }`}
+        >
+          {loading ? "Signing Up..." : "Sign Up"}
+        </button>
       </div>
-    </Container>
+    </div>
   );
 };
 

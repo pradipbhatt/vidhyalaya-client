@@ -9,7 +9,6 @@ import SchoolList from "../components/SchoolList";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen sm:p-0 sm:m-0">
-      <Navbar /> {/* Include Navbar outside of the main container */}
       <div className="flex flex-col items-center flex-grow py-5 px-8 md:px-4 overflow-y-auto ">
         <div className="flex flex-col w-full max-w-5xl gap-8 md:gap-6">
           <Banner />

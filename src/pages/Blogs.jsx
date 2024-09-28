@@ -27,7 +27,7 @@ const Blogs = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('https://vidhyalaya-backend.onrender.com/api/post');
+      const response = await axios.get('http://localhost:8081/api/post');
       const sortedPosts = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setPosts(sortedPosts);
     } catch (error) {
@@ -48,7 +48,7 @@ const Blogs = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('https://vidhyalaya-backend.onrender.com/api/post', formData);
+      const response = await axios.post('http://localhost:8081/api/post', formData);
       if (response.status === 201) {
         toast.success('Post created successfully!');
         setFormData({ title: '', content: '', author: formData.author });

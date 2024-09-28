@@ -23,7 +23,7 @@ const BlogForm = ({ fetchPosts }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('https://vidhyalaya-backend.onrender.com/api/post', formData);
+      const response = await axios.post('http://localhost:8081/api/post', formData);
       if (response.status === 201) {
         toast.success('Post created successfully!', {
           style: {

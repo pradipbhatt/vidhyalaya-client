@@ -20,6 +20,7 @@ import Shadharan from './components/schools/Shadharan';
 import MorningGlorySchool from './components/schools/MorningGlorySchool';
 import BlogForm from './components/BlogForm';
 import Admin from './components/Admin';
+import PostSchoolForm from "./components/PostSchoolForm";
 
 
 const Container = styled.div`
@@ -62,6 +63,7 @@ function App() {
               <Route path="/schools/3" exact element={<MorningGlorySchool/>} />
               <Route path="/schools/4" exact element={<Shadharan/>} />
               <Route path="/blogform" exact element={<BlogForm />} />
+              <Route path="/postschool" exact element={<PostSchoolForm/>} />
             </Routes>
           </Container>
         ) : (

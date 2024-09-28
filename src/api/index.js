@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// Create an instance of axios with a base URL
+// Create an instance of axios with a base URL for the local API
 const API = axios.create({
-  baseURL: "https://vidhyalaya-backend.onrender.com/api/",
+  baseURL: "http://localhost:8081/api/",
 });
 
 // Function to handle user signup
@@ -13,6 +13,4 @@ export const UserSignUp = async (data) =>
 // Function to handle user signin
 export const UserSignIn = async (data) => 
   // Make a POST request to the /user/signin endpoint with the provided data
-  API.post("/user/signin", data);
-
-
+  API.post("/user/login", data);  // Changed endpoint to /user/login

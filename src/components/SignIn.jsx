@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import TextInput from "./TextInput";
-import Button from "./Button";
-import { UserSignIn } from "../api";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducers/userSlice";
 
@@ -20,16 +18,19 @@ const SignIn = () => {
     return true;
   };
 
-  const handelSignIn = async () => {
+  const handleSignIn = async () => {
     setLoading(true);
     setButtonDisabled(true);
     if (validateInputs()) {
       try {
-        const res = await UserSignIn({ email, password });
-        dispatch(loginSuccess(res.data));
+        const res = await axios.post("http://localhost:8081/api/user/login", {
+          email,
+          password,
+        });
+        dispatch(loginSuccess(res.data)); // Save the user info in Redux
         alert("Login Success");
       } catch (err) {
-        alert(err.response.data.message);
+        alert(err.response?.data?.message || err.message);
       } finally {
         setLoading(false);
         setButtonDisabled(false);
@@ -42,30 +43,34 @@ const SignIn = () => {
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-primary mb-4">Welcome to Vidhyalaya 🩵</h2>
-        <p className="text-base text-secondary">Please login with your details here</p>
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-bold text-gray-800 mt-24">Welcome to Vidhyalaya 🩵</h2>
+        <p className="text-gray-600">Please login with your details here</p>
       </div>
-      <div className="mt-8 space-y-6">
-        <TextInput
-          label="Email Address"
-          placeholder="Enter your email address"
+      <div className="space-y-4">
+        <input
+          type="email"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Email Address"
           value={email}
-          handelChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <TextInput
-          label="Password"
-          placeholder="Enter your password"
-          password
+        <input
+          type="password"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Password"
           value={password}
-          handelChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Button
-          text="Sign In"
-          onClick={handelSignIn}
-          isLoading={loading}
-          isDisabled={buttonDisabled}
-        />
+        <button
+          onClick={handleSignIn}
+          disabled={buttonDisabled}
+          className={`w-full p-3 mt-4 text-white bg-blue-600 rounded-md focus:outline-none ${
+            buttonDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+          }`}
+        >
+          {loading ? "Signing In..." : "Sign In"}
+        </button>
       </div>
     </div>
   );
