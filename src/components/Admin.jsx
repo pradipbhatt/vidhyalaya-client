@@ -1,43 +1,16 @@
 import React from "react";
-import styled from "styled-components";
-// import Footer from "../components/Footer";
 import PostSchoolForm from "../components/PostSchoolForm";
-import PostSchool from "../components/PostSchool"; 
-// import SchoolDashboard from "../components/SchoolDashboard.jsx";
-
-const Container = styled.div`
-  flex: 1;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 22px 10px;
-  overflow-y: scroll;
-`;
-const Wrapper = styled.div`
-  flex: 1;
-  max-width: 1400px;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  @media (max-width: 600px) {
-    gap: 12px;
-  }
-`;
+import PostSchool from "../components/PostSchool";
 
 const Admin = () => {
-
   return (
-    <Container>
-      <Wrapper>
-        {/* <Banner/> */}
-        {/* <SchoolList/> */}
-       {/* <Testimonials/> */}
-        <PostSchoolForm/>
-        <PostSchool/>
-        {/* <SchoolDashboard/> */}
-        {/* <Footer/> */}
-      </Wrapper>
-    </Container>
+    <div className="flex justify-center py-6 px-4 h-full overflow-y-auto">
+      <div className="w-full max-w-7xl flex flex-col gap-6 md:gap-8">
+        {/* Add your components here */}
+        <PostSchoolForm />
+        <PostSchool />
+      </div>
+    </div>
   );
 };
 

@@ -35,15 +35,32 @@ const Profile = () => {
     <div className="flex justify-center items-center h-screen w-full bg-gray-100 text-gray-900">
       {currentUser ? (
         <div className="bg-white shadow-lg rounded-lg p-10 w-full max-w-lg text-center transform transition-transform duration-300 hover:scale-105 cursor-pointer">
+          {/* User Icon */}
           <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex justify-center items-center text-4xl text-white bg-primary-500">
             <FiUser />
           </div>
+
+          {/* User Details */}
           <div className="mt-4">
             <p className="text-xl font-bold">{currentUser.name}</p>
             <p className="text-gray-600">{currentUser.email}</p>
-            {/* Add more fields as necessary */}
+
+            {/* Additional Fields */}
+            {currentUser.phone && (
+              <p className="text-gray-600 mt-2">Phone: {currentUser.phone}</p>
+            )}
+            {currentUser.address && (
+              <p className="text-gray-600 mt-2">Address: {currentUser.address}</p>
+            )}
+            {currentUser.role && (
+              <p className="text-gray-600 mt-2">Role: {currentUser.role}</p>
+            )}
+            {currentUser.dateJoined && (
+              <p className="text-gray-600 mt-2">Joined: {new Date(currentUser.dateJoined).toLocaleDateString()}</p>
+            )}
           </div>
-          {/* Pass currentUser.email to child components or store it in Redux */}
+
+          {/* Add more fields as necessary */}
         </div>
       ) : (
         <p className="text-lg">No user data available</p>

@@ -11,7 +11,7 @@ import Compare from "./pages/Compare";
 import Blogs from "./pages/Blogs";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
-import Testimonials from "./components/Testimonials"
+import Testimonials from "./components/Testimonials";
 import ContactUs from "./pages/ContactUs";
 import SchoolList from './components/SchoolList';
 import Lba from './components/schools/Lba';
@@ -21,7 +21,7 @@ import MorningGlorySchool from './components/schools/MorningGlorySchool';
 import BlogForm from './components/BlogForm';
 import Admin from './components/Admin';
 import PostSchoolForm from "./components/PostSchoolForm";
-
+import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
 
 const Container = styled.div`
   width: 100%;
@@ -46,7 +46,18 @@ function App() {
             <Navbar currentUser={currentUser} />
             <Routes>
               <Route path="/" exact element={<Home />} />
-              <Route path="/admin" exact element={<Admin />} />
+              
+              {/* Protected Admin Route */}
+              <Route
+                path="/admin"
+                exact
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <Admin />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route path="/blogs" exact element={<Blogs />} />
               <Route path="/about" exact element={<About />} />
               <Route path="/compare" exact element={<Compare />} />
@@ -54,16 +65,14 @@ function App() {
               <Route path="/testimonials" exact element={<Testimonials />} />
               <Route path="/chat" exact element={<Chat />} />
               <Route path="/profile" exact element={<Profile />} />
-              {/* <Route path="/entrance" exact element={<Entrance />} /> */}
               <Route path="/contactus" exact element={<ContactUs />} />
               <Route path="/schools" exact element={<SchoolList />} />
-              {/* <Route path="/schoolspage" exact element={<Schoolspage />} /> */}
               <Route path="/schools/2" exact element={<Lba />} />
               <Route path="/schools/1" exact element={<RadiantSchool />} />
-              <Route path="/schools/3" exact element={<MorningGlorySchool/>} />
-              <Route path="/schools/4" exact element={<Shadharan/>} />
+              <Route path="/schools/3" exact element={<MorningGlorySchool />} />
+              <Route path="/schools/4" exact element={<Shadharan />} />
               <Route path="/blogform" exact element={<BlogForm />} />
-              <Route path="/postschool" exact element={<PostSchoolForm/>} />
+              <Route path="/postschool" exact element={<PostSchoolForm />} />
             </Routes>
           </Container>
         ) : (

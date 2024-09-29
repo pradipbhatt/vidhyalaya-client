@@ -1,4 +1,7 @@
 import React from 'react';
+import hrk from '../components/medias/hrk.jpg';
+import rishi from './medias/rishi.jpeg';
+import kishan from './medias/kishan.jpeg';
 
 const Testimonials = () => {
   const testimonials = [
@@ -6,7 +9,7 @@ const Testimonials = () => {
       name: 'Dr. Kishan Bhatt',
       title: 'Dean',
       company: 'Far Western University',
-      img: 'https://scontent.fktm1-1.fna.fbcdn.net/v/t39.30808-6/394035966_10160917867991480_3318039607176965184_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WXkEPJAX1FUQ7kNvgFIy1he&_nc_ht=scontent.fktm1-1.fna&oh=00_AYBm197lcfgv3CIlxVSzPs_uHKg4EAsk60wpsAXLazVO0A&oe=66789803',
+      img:kishan,
       quoteTitle: 'Inspiring Leadership',
       quote: 'Our project Vidhyalaya is a testament to our commitment to excellence and innovation in education.',
       rating: 5
@@ -15,7 +18,7 @@ const Testimonials = () => {
       name: 'Harendra Raj Kalauni',
       title: 'Head of Department',
       company: 'Far Western University',
-      img: 'https://scontent.fktm1-1.fna.fbcdn.net/v/t1.6435-9/165774678_3842273712535120_5532216151641677450_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=0_4jRJbWXFQQ7kNvgGWfYn2&_nc_ht=scontent.fktm1-1.fna&oh=00_AYC1n23PjxYtMpHYLP9Le4OR0N7iYVHQbP5eCOoxKeGGjw&oe=669A165B',
+      img: hrk,
       quoteTitle: 'Pioneering Education',
       quote: 'Vidhyalaya brings a new perspective to comparing educational institutions and providing essential resources.',
       rating: 4
@@ -24,7 +27,7 @@ const Testimonials = () => {
       name: 'Rishi K. Marseni',
       title: 'Team Advisor',
       company: 'Far Western University',
-      img: 'https://scontent.fktm1-1.fna.fbcdn.net/v/t39.30808-6/275320881_5097818906903803_1471185847402786064_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=6Z7LpVaEKT8Q7kNvgHQZd6Q&_nc_ht=scontent.fktm1-1.fna&oh=00_AYDFsqpXVpqHR4USdNJaOXvQjyJahYqcceOGMKX85o5DtA&oe=66787DBE',
+      img: rishi,
       quoteTitle: 'Guidance and Support',
       quote: 'The guidance and support for the Vidhyalaya project have been crucial in its success.',
       rating: 5

@@ -1,0 +1,13 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+  }
+  
+  .font-roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Custom background gradient */
+  .bg-gradient {
+    background: linear-gradient(122.74deg, rgba(4, 81, 97, 0.5) -4.02%, rgba(4, 81, 97, 0.3) 52.1%, rgba(4, 81, 97, 0) 101.17%);
+  }
+  
