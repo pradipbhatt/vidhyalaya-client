@@ -16,8 +16,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 shadow-lg">
-      <div className="flex items-center justify-between">
+    <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 shadow-lg fixed w-full z-10">
+      <div className="flex items-center justify-between max-w-screen-xl mx-auto">
         {/* Logo */}
         <Link to="/" className="text-3xl font-bold text-white hover:text-gray-200 transition duration-300">
           Vidhyalaya
@@ -25,59 +25,16 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link
-            to="/"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Home
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/about"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            About
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/blogs"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Blogs
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/contact"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Contact Us
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/schools"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Schools
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-
-          <Link
-            to="/chat"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Chat
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-
-          <Link
-            to="/compare"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-          >
-            Compare
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-
-
+          {['/', '/about', '/blogs', '/contact', '/schools', '/chat', '/compare'].map((path, index) => (
+            <Link
+              key={index}
+              to={path}
+              className="text-white hover:text-gray-200 transition duration-300 relative group"
+            >
+              {path === '/' ? 'Home' : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
           {isAdmin && (
             <Link
               to="/admin"
@@ -168,46 +125,17 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden flex flex-col mt-4 space-y-2">
-          <Link
-            to="/"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Home
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/about"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            About
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/blogs"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Blogs
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/contact"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Contact Us
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/schools"
-            className="text-white hover:text-gray-200 transition duration-300 relative group"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Schools
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </Link>
+          {['/', '/about', '/blogs', '/contact', '/schools'].map((path, index) => (
+            <Link
+              key={index}
+              to={path}
+              className="text-white hover:text-gray-200 transition duration-300 relative group"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {path === '/' ? 'Home' : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
           {isAdmin && (
             <Link
               to="/admin"
