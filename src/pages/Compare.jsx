@@ -1,230 +1,190 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { ToastContainer, toast } from 'react-toastify';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'react-toastify/dist/ReactToastify.css';
-// import './Compare.css'; // Import custom CSS for scrollbar
+import L from 'leaflet';
 
-// Set the custom icon for the markers
-const customIcon = new L.Icon({
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+// Fix Leaflet marker icon issue
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
 });
 
 const Compare = () => {
   const [schools, setSchools] = useState([]);
-  const [selectedSchool1, setSelectedSchool1] = useState('');
-  const [selectedSchool2, setSelectedSchool2] = useState('');
-  const [school1, setSchool1] = useState(null);
-  const [school2, setSchool2] = useState(null);
+  const [selectedSchools, setSelectedSchools] = useState([]);
+  const [comparedSchools, setComparedSchools] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSchools = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/postschool');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setSchools(data);
+        const response = await axios.get('http://localhost:8081/api/postschool');
+        setSchools(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching schools:', error);
       }
     };
 
-    fetchData();
+    fetchSchools();
   }, []);
 
+  const handleSelectSchool = (schoolId, index) => {
+    const updatedSelection = [...selectedSchools];
+    updatedSelection[index] = schoolId; // Update the selected school for the specific dropdown
+    setSelectedSchools(updatedSelection);
+  };
+
   const handleCompare = () => {
-    if (selectedSchool1 === selectedSchool2) {
-      toast.error('Cannot compare the same schools!');
-      return;
-    }
+    const filteredSchools = schools.filter((school) =>
+      selectedSchools.includes(school._id)
+    );
+    setComparedSchools(filteredSchools);
+  };
 
-    const schoolData1 = schools.find(school => school.id === parseInt(selectedSchool1));
-    const schoolData2 = schools.find(school => school.id === parseInt(selectedSchool2));
-
-    setSchool1(schoolData1);
-    setSchool2(schoolData2);
+  // Calculate the center point for the map based on the selected schools' locations
+  const calculateMapCenter = () => {
+    if (comparedSchools.length === 0) return [27.7172, 85.324]; // Default to Kathmandu
+    const lat = comparedSchools.reduce((sum, school) => sum + school.location.lat, 0) / comparedSchools.length;
+    const lng = comparedSchools.reduce((sum, school) => sum + school.location.lng, 0) / comparedSchools.length;
+    return [lat, lng];
   };
 
   return (
-    <div className="font-serif text-emerald-900 p-5 mb-10 max-h-[calc(100vh-10px)] lg:mx-20 overflow-y-scroll hide-scrollbar">
-      <h1 className="text-center mb-10 font-cursive">Compare Schools</h1>
-      <div className="flex flex-col md:flex-row items-center my-10 gap-5">
-        {/* First School Selection */}
-        <div className="flex-1">
-          <select
-            onChange={e => setSelectedSchool1(e.target.value)}
-            value={selectedSchool1}
-            className="w-full p-2 mb-5 border border-gray-300 rounded"
-          >
-            <option value="">Select First School</option>
-            {schools.map(school => (
-              <option key={school.id} value={school.id}>
-                {school.title}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold text-center mb-8">Compare Schools</h2>
 
-        {/* Second School Selection */}
-        <div className="flex-1">
-          <select
-            onChange={e => setSelectedSchool2(e.target.value)}
-            value={selectedSchool2}
-            className="w-full p-2 mb-5 border border-gray-300 rounded"
-          >
-            <option value="">Select Second School</option>
-            {schools.map(school => (
-              <option key={school.id} value={school.id}>
-                {school.title}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Selection Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+        {Array.from({ length: 2 }).map((_, index) => (
+          <div key={index} className="border border-gray-300 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-2">Select School {index + 1}</h3>
+            <select
+              className="form-select block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2"
+              onChange={(e) => handleSelectSchool(e.target.value, index)}
+              value={selectedSchools[index] || ''}
+            >
+              <option value="">-- Select a school --</option>
+              {schools.map((school) => (
+                <option key={school._id} value={school._id}>
+                  {school.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
       </div>
 
       {/* Compare Button */}
-      <div className="flex justify-center">
+      <div className="text-center mb-8">
         <button
+          className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors duration-300 
+          ${selectedSchools.filter(Boolean).length === 2 ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'}`}
           onClick={handleCompare}
-          className="p-3 bg-gradient-to-r from-emerald-900 to-teal-700 text-gray-400 rounded-2xl hover:from-teal-700 hover:to-emerald-900 transition duration-300"
-          style={{ minWidth: '150px' }}
+          disabled={selectedSchools.filter(Boolean).length < 2}
         >
           Compare
         </button>
       </div>
 
-      {/* Comparison Table and Map */}
-      {school1 && school2 && (
-        <>
-          <div className="overflow-x-auto mt-10 mb-5">
-            <table className="w-full border-collapse mb-5">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="border p-2 text-left">Feature</th>
-                  <th className="border p-2 text-left">{school1.title}</th>
-                  <th className="border p-2 text-left">{school2.title}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border p-2">Fee (Class 11)</td>
-                  <td className="border p-2">RS {school1.prices.class11}</td>
-                  <td className="border p-2">RS {school2.prices.class11}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Fee (Class 12)</td>
-                  <td className="border p-2">RS {school1.prices.class12}</td>
-                  <td className="border p-2">RS {school2.prices.class12}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Infrastructure</td>
-                  <td className="border p-2">{school1.infrastructure}</td>
-                  <td className="border p-2">{school2.infrastructure}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Contact</td>
-                  <td className="border p-2">{school1.contact.phone}</td>
-                  <td className="border p-2">{school2.contact.phone}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Location</td>
-                  <td className="border p-2">{school1.location.lat}, {school1.location.lng}</td>
-                  <td className="border p-2">{school2.location.lat}, {school2.location.lng}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Courses</td>
-                  <td className="border p-2">{school1.courses}</td>
-                  <td className="border p-2">{school2.courses}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Rank</td>
-                  <td className="border p-2">{school1.rank}</td>
-                  <td className="border p-2">{school2.rank}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Alumni Total</td>
-                  <td className="border p-2">{school1.alumniTotal}</td>
-                  <td className="border p-2">{school2.alumniTotal}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Alumni Engineers</td>
-                  <td className="border p-2">{school1.alumniEngineers}</td>
-                  <td className="border p-2">{school2.alumniEngineers}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Alumni Doctors</td>
-                  <td className="border p-2">{school1.alumniDoctors}</td>
-                  <td className="border p-2">{school2.alumniDoctors}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Teachers</td>
-                  <td className="border p-2">{school1.teachers}</td>
-                  <td className="border p-2">{school2.teachers}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Passout Rate</td>
-                  <td className="border p-2">{school1.passoutRate}</td>
-                  <td className="border p-2">{school2.passoutRate}</td>
-                </tr>
-                <tr>
-                  <td className="border p-2">Website</td>
-                  <td className="border p-2">
-                    <a
-                      href={school1.showMoreUrl}
-                      className="text-blue-500 underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Visit {school1.title}
-                    </a>
-                  </td>
-                  <td className="border p-2">
-                    <a
-                      href={school2.showMoreUrl}
-                      className="text-blue-500 underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Visit {school2.title}
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      {/* Comparison Results */}
+      {comparedSchools.length > 0 && (
+        <div className="mt-12">
+          <h3 className="text-2xl font-bold text-center mb-8">Comparison Results</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {comparedSchools.map((school) => (
+              <div key={school._id} className="border border-gray-300 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h3 className="text-xl font-semibold text-blue-600">{school.title}</h3>
+                <img src={school.image} alt={school.title} className="mt-4 mb-4 rounded-lg w-full" />
+                <table className="w-full mt-4 text-left border-collapse">
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Description:</td>
+                      <td className="py-2">{school.description}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Infrastructure:</td>
+                      <td className="py-2">{school.infrastructure}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Rank:</td>
+                      <td className="py-2">{school.rank}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Total Alumni:</td>
+                      <td className="py-2">{school.alumniTotal}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Alumni Engineers:</td>
+                      <td className="py-2">{school.alumniEngineers}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Alumni Doctors:</td>
+                      <td className="py-2">{school.alumniDoctors}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Teachers:</td>
+                      <td className="py-2">{school.teachers}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Teacher Qualifications:</td>
+                      <td className="py-2">{school.teacherQualifications}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Passout Rate:</td>
+                      <td className="py-2">{school.passoutRate}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Prices:</td>
+                      <td className="py-2">{JSON.stringify(school.prices)}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Location:</td>
+                      <td className="py-2">{JSON.stringify(school.location)}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Courses:</td>
+                      <td className="py-2">{school.courses.join(", ")}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2 font-semibold">Contact:</td>
+                      <td className="py-2">{JSON.stringify(school.contact)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a
+                  href={school.showMoreUrl}
+                  className="mt-4 inline-block text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Show More
+                </a>
+              </div>
+            ))}
           </div>
-          <div className="h-72 w-full mb-5">
-            <h1 className="text-center mb-5 font-cursive">School Location on Map</h1>
-            <MapContainer
-              center={[parseFloat(school1.location.lat), parseFloat(school1.location.lng)]}
-              zoom={13}
-              style={{ height: '100%', width: '100%' }}
-            >
+
+          {/* Map Display */}
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-center mb-8">School Locations</h3>
+            <MapContainer center={calculateMapCenter()} zoom={10} className="h-96 w-full">
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
-              <Marker position={[parseFloat(school1.location.lat), parseFloat(school1.location.lng)]} icon={customIcon}>
-                <Popup>{school1.title}</Popup>
-              </Marker>
-              <Marker position={[parseFloat(school2.location.lat), parseFloat(school2.location.lng)]} icon={customIcon}>
-                <Popup>{school2.title}</Popup>
-              </Marker>
+              {comparedSchools.map((school) => (
+                <Marker key={school._id} position={[school.location.lat, school.location.lng]}>
+                  <Popup>
+                    <strong>{school.title}</strong><br />
+                    {school.description}
+                  </Popup>
+                </Marker>
+              ))}
             </MapContainer>
           </div>
-        </>
+        </div>
       )}
-
-      {/* Toast Container */}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };

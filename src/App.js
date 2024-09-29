@@ -30,8 +30,6 @@ const Container = styled.div`
   flex-direction: column;
   background: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.text_primary};
-  overflow-x: hidden;
-  overflow-y: hidden;
   transition: all 0.2s ease;
 `;
 
