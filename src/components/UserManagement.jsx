@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState({
-    fullname: "",
-    email: "",
-    registrationNumber: "",
-    password: "", // Added password field
+    fullname: "pradip bhatt",
+    email: "pradip10bhatt@gmail.com",
+    registrationNumber: "BCT03377",
+    password: "1111", // Added password field
     isAdmin: false,
-    userImage: "",
+    userImage: "HTTPS://pradipbhatt.com.np",
   });
   
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +26,7 @@ const UserManagement = () => {
       setUsers(response.data); // Adjust based on your API response
     } catch (error) {
       console.error("Error fetching users:", error);
+      toast.error("Failed to fetch users");
     }
   };
 
@@ -34,13 +37,13 @@ const UserManagement = () => {
   // Validate user inputs
   const validateInputs = () => {
     if (!userData.fullname || !userData.email || !userData.registrationNumber || !userData.password) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
       return false;
     }
     // Optionally: Add email format validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(userData.email)) {
-      alert("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return false;
     }
     return true;
@@ -60,13 +63,13 @@ const UserManagement = () => {
           userImage: userData.userImage,
           isAdmin: userData.isAdmin,
         });
-        alert("Account Created Successfully");
+        toast.success("Account Created Successfully");
         console.log("Response:", res.data);
         fetchUsers(); // Refresh the user list after signing up
         // Clear form
         setUserData({ fullname: "", email: "", registrationNumber: "", password: "", isAdmin: false, userImage: "" });
       } catch (err) {
-        alert(err.response?.data?.message || err.message);
+        toast.error(err.response?.data?.message || err.message);
         console.error("Error signing up:", err);
       } finally {
         setLoading(false);
@@ -82,22 +85,29 @@ const UserManagement = () => {
   const handleUpdateUser = async () => {
     try {
       await axios.put(`http://localhost:8081/api/user/${currentUserId}`, userData);
+      toast.success("User updated successfully");
       fetchUsers(); // Refresh the user list after updating
       setIsEditing(false); // Reset editing state
       setUserData({ fullname: "", email: "", registrationNumber: "", password: "", isAdmin: false, userImage: "" }); // Clear form
       setCurrentUserId(null); // Reset current user ID
     } catch (error) {
+      toast.error("Error updating user");
       console.error("Error updating user:", error);
     }
   };
 
-  // Handle user deletion
+  // Handle user deletion with confirmation
   const handleDeleteUser = async (userId) => {
-    try {
-      await axios.delete(`http://localhost:8081/api/user/${userId}`);
-      setUsers(users.filter((user) => user._id !== userId)); // Update state to remove deleted user
-    } catch (error) {
-      console.error("Error deleting user:", error);
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://localhost:8081/api/user/${userId}`);
+        setUsers(users.filter((user) => user._id !== userId)); // Update state to remove deleted user
+        toast.success("User deleted successfully");
+      } catch (error) {
+        toast.error("Error deleting user");
+        console.error("Error deleting user:", error);
+      }
     }
   };
 
@@ -214,6 +224,8 @@ const UserManagement = () => {
           ))}
         </tbody>
       </table>
+
+      <ToastContainer />
     </div>
   );
 };
