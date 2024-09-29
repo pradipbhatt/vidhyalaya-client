@@ -51,27 +51,13 @@ const PostSchool = () => {
     fetchSchools();
   }, []);
 
-  // Handle form changes, accounting for nested fields
+  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name.includes('.')) {
-      // For nested fields
-      const [parent, child] = name.split('.');
-      setFormData((prevData) => ({
-        ...prevData,
-        [parent]: {
-          ...prevData[parent],
-          [child]: value,
-        },
-      }));
-    } else {
-      // For non-nested fields
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   // Handle the delete operation
@@ -273,31 +259,46 @@ const PostSchool = () => {
       
       <div className="max-w-4xl mx-auto mt-8">
         <h1 className="text-3xl font-bold text-center">Schools for +2</h1>
-        {loading ? (
-          <p className="text-center">Loading schools...</p>
-        ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {schools.map((school) => (
-              <div key={school._id} className="p-4 border rounded shadow">
-                <h3 className="text-xl font-bold">{school.title}</h3>
-                <p>{school.description}</p>
-                <p>Rank: {school.rank}</p>
-                <button 
-                  onClick={() => startUpdating(school)} 
-                  className="bg-yellow-500 text-white px-4 py-2 rounded mt-2"
-                >
-                  Edit
-                </button>
-                <button 
-                  onClick={() => handleDelete(school._id)} 
-                  className="bg-red-500 text-white px-4 py-2 rounded mt-2 ml-2"
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
+        <div className="overflow-y max-h-screen mt-4">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+            {schools.length === 0 ? (
+              <p className="text-center">No schools found.</p>
+            ) : (
+              schools.map((school) => (
+                <div key={school._id} className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+                  <img
+                    src={school.image}
+                    alt={school.title}
+                    className="w-full h-48 object-cover object-center"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-xl font-bold mb-2">{school.title}</h2>
+                    <p className="text-gray-700 mb-2">{school.description}</p>
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600"><span className="font-bold">Rank:</span> {school.rank}</p>
+                      <p className="text-sm text-gray-600"><span className="font-bold">Courses:</span> {school.courses}</p>
+                      <p className="text-sm text-gray-600"><span className="font-bold">Infrastructure:</span> {school.infrastructure}</p>
+                      <p className="text-sm text-gray-600"><span className="font-bold">Contact:</span> {school.contact.phone}</p>
+                      <p className="text-sm text-gray-600"><span className="font-bold">Location:</span> {school.location.lat}, {school.location.lng}</p>
+                    </div>
+                    <button
+                      onClick={() => startUpdating(school)}
+                      className="bg-blue-500 text-white px-4 py-1 rounded mr-2"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(school._id)}
+                      className="bg-red-500 text-white px-4 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

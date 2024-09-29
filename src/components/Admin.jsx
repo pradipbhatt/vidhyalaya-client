@@ -8,7 +8,7 @@ const Admin = () => {
     <div className="flex justify-center py-6 px-4 h-full overflow-y-auto">
       <div className="w-full flex flex-col gap-6 md:gap-8">
         {/* Add your components here */}
-        {/* <UserManagement/> */}
+        <UserManagement/>
         {/* <PostSchoolForm /> */}
         <PostSchool />
       </div>
