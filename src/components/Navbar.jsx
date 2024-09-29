@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/reducers/userSlice'; // Update the import to use the correct action
+import { logout } from '../redux/reducers/userSlice';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion'; // Import motion from framer-motion
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ const Navbar = () => {
   const isAdmin = currentUser && currentUser.isAdmin;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false); // State for mobile menu
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -25,7 +26,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          {['/', '/about', '/blogs', '/contact', '/schools', '/chat', '/compare'].map((path, index) => (
+          {['/', '/about', '/blogs', '/contact', '/profile', '/compare'].map((path, index) => (
             <Link
               key={index}
               to={path}
@@ -67,7 +68,13 @@ const Navbar = () => {
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
+                <motion.div
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }} // Adjust duration for dropdown animation
+                >
                   <Link
                     to="/profile"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300"
@@ -80,7 +87,7 @@ const Navbar = () => {
                   >
                     Logout
                   </button>
-                </div>
+                </motion.div>
               )}
             </div>
           ) : (
@@ -124,7 +131,13 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden flex flex-col mt-4 space-y-2">
+        <motion.div
+          className="md:hidden flex flex-col mt-4 space-y-2"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.5 }} // Adjust duration for mobile menu animation
+        >
           {['/', '/about', '/blogs', '/contact', '/schools'].map((path, index) => (
             <Link
               key={index}
@@ -188,7 +201,7 @@ const Navbar = () => {
               </Link>
             </>
           )}
-        </div>
+        </motion.div>
       )}
     </nav>
   );

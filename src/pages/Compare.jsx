@@ -3,6 +3,9 @@ import axios from 'axios';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import Footer from '../components/Footer';
+import { motion } from 'framer-motion';
+import Chat from './Chat';
 
 // Fix Leaflet marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
@@ -52,7 +55,13 @@ const Compare = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+   <>
+    <motion.div 
+      className="container px-8 py-8 bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
       <h2 className="text-3xl font-bold text-center mb-8">Compare Schools</h2>
 
       {/* Selection Section */}
@@ -61,7 +70,7 @@ const Compare = () => {
           <div key={index} className="border border-gray-300 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
             <h3 className="text-xl font-semibold mb-2">Select School {index + 1}</h3>
             <select
-              className="form-select block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2"
+              className="form-select block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2 bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)]"
               onChange={(e) => handleSelectSchool(e.target.value, index)}
               value={selectedSchools[index] || ''}
             >
@@ -79,8 +88,8 @@ const Compare = () => {
       {/* Compare Button */}
       <div className="text-center mb-8">
         <button
-          className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors duration-300 
-          ${selectedSchools.filter(Boolean).length === 2 ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'}`}
+          className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors duration-300  
+          ${selectedSchools.filter(Boolean).length === 2 ? 'bg-teal-700 transition-all duration-1000 ease-in-out hover:bg-gradient-to-r hover:from-teal-800 hover:to-teal-400' : 'bg-gray-400 cursor-not-allowed'}`}
           onClick={handleCompare}
           disabled={selectedSchools.filter(Boolean).length < 2}
         >
@@ -90,11 +99,20 @@ const Compare = () => {
 
       {/* Comparison Results */}
       {comparedSchools.length > 0 && (
-        <div className="mt-12">
+        <motion.div 
+          className="mt-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
           <h3 className="text-2xl font-bold text-center mb-8">Comparison Results</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {comparedSchools.map((school) => (
-              <div key={school._id} className="border border-gray-300 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <motion.div 
+                key={school._id} 
+                className="border border-gray-300 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                whileHover={{ scale: 1.01 }}
+              >
                 <h3 className="text-xl font-semibold text-blue-600">{school.title}</h3>
                 <img src={school.image} alt={school.title} className="mt-4 mb-4 rounded-lg w-full" />
                 <table className="w-full mt-4 text-left border-collapse">
@@ -161,31 +179,33 @@ const Compare = () => {
                 >
                   Show More
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Map Display */}
-          <div className="mt-12">
+          <motion.div 
+            className="mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h3 className="text-2xl font-bold text-center mb-8">School Locations</h3>
-            <MapContainer center={calculateMapCenter()} zoom={10} className="h-96 w-full">
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
+            <MapContainer center={calculateMapCenter()} zoom={13} style={{ height: '500px', width: '100%' }}>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {comparedSchools.map((school) => (
                 <Marker key={school._id} position={[school.location.lat, school.location.lng]}>
-                  <Popup>
-                    <strong>{school.title}</strong><br />
-                    {school.description}
-                  </Popup>
+                  <Popup>{school.title}</Popup>
                 </Marker>
               ))}
             </MapContainer>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
+    <Chat/>
+    <Footer />
+    </>
   );
 };
 

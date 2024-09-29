@@ -6,6 +6,8 @@ import location from "./location.svg";
 import mail from "./mail.svg";
 import phone from "./phone.svg";
 import twitter from "./twitter.svg";
+import Chat from './Chat';
+import Footer from "../components/Footer";
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -34,6 +36,7 @@ export default function ContactSection() {
   };
 
   return (
+    <>
     <div className="bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)] p-2 lg:p-12 md:p-8 sm:flex sm:justify-between">
       {/* Contact Info Section */}
       <div className="bg-transparent p-2 lg:p-12 md:p-8 sm:p-6 sm:w-full md:w-1/2 flex flex-col justify-between">
@@ -159,5 +162,8 @@ export default function ContactSection() {
 
 
     </div>
+    <Chat/>
+    <Footer/>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 const Blogs = () => {
   const [posts, setPosts] = useState([]);
@@ -71,82 +72,82 @@ const Blogs = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 overflow-y-auto h-screen bg-gray-100 mt-20 relative">
-      <div className="w-full max-w-screen-lg bg-white shadow-md rounded-lg p-6 mb-4 z-1 relative">
-        <h1 className="text-2xl font-bold text-center mb-6">Create a Blog Post</h1>
-        {/* Blurry background with image overlay inside the form */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url('https://www.holidify.com/images/cmsuploads/compressed/sarangkot_20180710001134.jpg')`,
-            backgroundSize: 'cover',
-            filter: 'blur(1px)',
-            opacity: 0.5,
-            borderRadius: '1rem',
-          }}
-        ></div>
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto relative z-1 transform hover:scale-105 transition duration-300 shadow-lg rounded-lg p-6">
-          <div className="grid grid-cols-1 gap-4">
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Title"
-              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:border-blue-500"
-              required
-            />
-            <textarea
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
-              placeholder="Content"
-              rows="4"
-              className="border border-gray-300 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
-              required
-            ></textarea>
-            <input
-              type="text"
-              name="author"
-              value={formData.author}
-              readOnly // Make the author field read-only
-              className="border border-gray-300 rounded-md px-3 py-2 w-full bg-gray-100"
-              disabled
-            />
-            <button
-              type="submit"
-              className={`bg-blue-500 text-white rounded-md px-4 py-2 w-full ${
-                isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-600'
-              } transition duration-300`}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit Post'}
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="flex flex-col items-center p-6 bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)]  text-teal-900 mt-14">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="grid grid-cols-1 gap-4 w-full max-w-screen-lg mt-8 z-10 relative">
+      
+      {/* Blog Post Creation Form */}
+      <motion.div 
+        className="w-full max-w-2xl bg-blue-100 shadow-lg rounded-lg p-6 mb-8"
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">Share Your Memories #FWU-DIARY</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Blog Title"
+            className="border border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:border-blue-600 transition duration-200"
+            required
+          />
+          <textarea
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
+            placeholder="Write your story..."
+            rows="5"
+            className="border border-gray-300 rounded-md px-4 py-2 mb-4 resize-none focus:outline-none focus:border-blue-600 transition duration-200"
+            required
+          ></textarea>
+          <input
+            type="text"
+            name="author"
+            value={formData.author}
+            readOnly
+            className="border border-gray-300 rounded-md px-4 py-2 mb-4 bg-gray-100 cursor-not-allowed"
+            disabled
+          />
+          <button
+            type="submit"
+            className={`bg-blue-600 text-white rounded-md px-4 py-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'} transition duration-300`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit Post'}
+          </button>
+        </form>
+      </motion.div>
+
+      {/* Blog Feed */}
+      <div className="grid grid-cols-1 gap-6 w-full max-w-2xl">
         {posts.length === 0 ? (
-          <p className="text-center text-gray-500">Loading...</p>
+          <p className="text-center text-gray-200">No posts available. Be the first to share!</p>
         ) : (
           posts.map((post) => (
-            <div key={post._id} className="bg-white shadow-md rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
-              <h2 className="text-lg font-bold px-6 py-4">{post.title}</h2>
-              <div className={`text-sm text-gray-600 px-6 ${expandedPostIds.includes(post._id) ? '' : 'line-clamp-3'}`} style={{ whiteSpace: 'pre-wrap' }}>
+            <motion.div 
+              key={post._id} 
+              className="bg-white shadow-lg rounded-lg p-4"
+              initial={{ opacity: 0, translateY: 20 }} 
+              animate={{ opacity: 1, translateY: 0 }} 
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
+              <p className={`text-gray-700 ${expandedPostIds.includes(post._id) ? '' : 'line-clamp-3'}`} style={{ whiteSpace: 'pre-wrap' }}>
                 {post.content}
-              </div>
-              <div className="flex items-center justify-between px-6 mt-2">
-                <p className="text-xs text-gray-700">Author: {post.author}</p>
-                <p className="text-xs text-gray-700">Created: {new Date(post.createdAt).toLocaleString()}</p>
+              </p>
+              <div className="flex items-center justify-between text-xs text-gray-500 mt-2">
+                <p>By: {post.author}</p>
+                <p>{new Date(post.createdAt).toLocaleString()}</p>
               </div>
               <button
-                className="bg-blue-500 text-white rounded-md px-4 py-2 mx-6 mt-2 mb-4 hover:bg-blue-600 transition duration-300"
+                className="bg-blue-600 text-white rounded-md px-4 py-1 mt-2 hover:bg-blue-700 transition duration-300"
                 onClick={() => toggleReadMore(post._id)}
               >
                 {expandedPostIds.includes(post._id) ? 'Read Less' : 'Read More'}
               </button>
-            </div>
+            </motion.div>
           ))
         )}
       </div>

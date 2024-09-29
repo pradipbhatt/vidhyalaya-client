@@ -35,7 +35,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gradient-to-r from-blue-100 to-blue-300 animate-gradient min-h-screen mt-6">
+    <div className="flex flex-col items-center p-4 bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)] animate-gradient min-h-screen mt-6">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-10">
         <div className="flex items-center mb-4">
           {/* User Profile Image */}

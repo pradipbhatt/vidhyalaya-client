@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 const SchoolList = () => {
   const [schools, setSchools] = useState([]);
@@ -10,7 +11,7 @@ const SchoolList = () => {
       try {
         const response = await axios.get('http://localhost:8081/api/postschool');
         if (response.status === 200) {
-          setSchools(response.data); // Assuming response.data is an array of schools
+          setSchools(response.data);
         } else {
           console.error('Failed to fetch schools');
         }
@@ -22,79 +23,83 @@ const SchoolList = () => {
     };
 
     fetchSchools();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []);
 
   return (
-    <div className="min-h-screen overflow-y-auto">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mt-0">Schools for +2</h1>
-        <div className="overflow-y max-h-screen mt-10">
-          <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
-            {loading ? (
-              <p className="text-center">Loading...</p>
-            ) : schools.length === 0 ? (
-              <p className="text-center">No schools found.</p>
-            ) : (
-              schools.map((school) => (
-                <div key={school._id} className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
-                  <img
-                    src={school.image}
-                    alt={school.title}
-                    className="w-full h-48 object-cover object-center"
-                    onError={(e) => {
-                      e.target.onerror = null; // Prevent infinite fallback loop
-                      e.target.src = 'path/to/fallback-image.jpg'; // Set a fallback image
-                    }}
-                  />
-                  <div className="p-4">
-                    <h2 className="text-xl font-bold mb-2">{school.title}</h2>
-                    <p className="text-gray-700 mb-2">{school.description}</p>
-                    <div className="mb-4">
+    <div className=" flex flex-col items-center">
+      <div className="max-w-4xl w-full mx-auto p-4">
+        <h1 className="text-4xl font-bold text-center text-white mt-20 mb-4">Schools for +2</h1>
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+          {loading ? (
+            <p className="text-center text-white">Loading...</p>
+          ) : schools.length === 0 ? (
+            <p className="text-center text-white">No schools found.</p>
+          ) : (
+            schools.map((school) => (
+              <motion.div
+                key={school._id}
+                className="bg-white shadow-lg rounded-lg overflow-hidden"
+                initial={{ opacity: 0, translateY: 20 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src={school.image}
+                  alt={school.title}
+                  className="w-full h-48 object-cover object-center"
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevent infinite fallback loop
+                    e.target.src = 'path/to/fallback-image.jpg'; // Set a fallback image
+                  }}
+                />
+                <div className="p-4 bg-gray-50"> {/* Add background color for card */}
+                  <h2 className="text-2xl font-bold text-black mb-2">{school.title}</h2>
+                  <p className="text-gray-700 mb-2">{school.description}</p>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600">
+                      <span className="font-bold">Rank:</span> {school.rank}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-bold">Courses:</span> {school.courses}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-bold">Infrastructure:</span> {school.infrastructure}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-bold">Contact Phone:</span> {school.contact.phone}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-bold">Location:</span> {school.location.lat}, {school.location.lng}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Rank:</span> {school.rank}
+                        <span className="font-bold">Total Alumni:</span> {school.alumniTotal}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Courses:</span> {school.courses}
+                        <span className="font-bold">Alumni Engineers:</span> {school.alumniEngineers}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Infrastructure:</span> {school.infrastructure}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        <span className="font-bold">Contact Phone:</span> {school.contact.phone}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        <span className="font-bold">Location:</span> {school.location.lat}, {school.location.lng}
+                        <span className="font-bold">Alumni Doctors:</span> {school.alumniDoctors}
                       </p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Total Alumni:</span> {school.alumniTotal}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Alumni Engineers:</span> {school.alumniEngineers}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Alumni Doctors:</span> {school.alumniDoctors}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Teachers:</span> {school.teachers}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Teacher Qualifications:</span> {school.teacherQualifications}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-bold">Passout Rate:</span> {school.passoutRate}
-                        </p>
-                      </div>
+                    <div>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Teachers:</span> {school.teachers}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Teacher Qualifications:</span> {school.teacherQualifications}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Passout Rate:</span> {school.passoutRate}
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
       <style>

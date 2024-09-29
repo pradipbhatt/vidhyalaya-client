@@ -1,7 +1,8 @@
 import React from "react";
-import PostSchoolForm from "../components/PostSchoolForm";
-import PostSchool from "../components/PostSchool";
+import PostSchoolForm from "./PostSchoolForm";
+import PostSchool from "./PostSchool";
 import UserManagement from "./UserManagement";
+import Post from "./Post";
 
 const Admin = () => {
   return (
@@ -10,6 +11,7 @@ const Admin = () => {
         {/* Add your components here */}
         <UserManagement/>
         {/* <PostSchoolForm /> */}
+        <Post/>
         <PostSchool />
       </div>
     </div>

@@ -38,7 +38,7 @@ const developers = [
 const About = () => {
   return (
     <>
-    <div className="min-h-screen bg-gray-100 py-8 overflow-y-auto mt-10 font-serif">
+    <div className="bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)]  py-0 pt-10 overflow-y-auto mt-10 font-serif">
       <div className="container mx-auto text-left px-6 sm:px-20"> {/* Added sm:px-20 for larger screens */}
         {/* First Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

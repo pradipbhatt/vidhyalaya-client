@@ -35,9 +35,9 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 mt-20">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 mt-20 ">
       {testimonials.map((testimonial, index) => (
-        <div key={index} className="font-sans max-w-[410px] h-auto p-6 rounded-lg mx-auto shadow-[0_6px_18px_-6px_rgba(193,195,248)] bg-white relative">
+        <div key={index} className="font-sans max-w-[410px] h-auto p-6 rounded-lg mx-auto shadow-[0_6px_18px_-6px_rgba(193,195,248)] bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)] relative">
           <img src={testimonial.img} className="w-16 h-16 rounded-full absolute right-0 left-0 mx-auto -top-7" alt={testimonial.name} />
           <div className="mt-6 text-center">
             <div>

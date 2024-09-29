@@ -21,56 +21,46 @@ const Banner = () => {
       if (schoolId) {
         navigate(`/schools/${schoolId}`);
       } else {
-        alert('कृपया एक मान्य स्कूल छान्नुहोस्।');
+        alert('Please select a valid school.');
       }
     }
   };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center h-screen px-4"
-      style={{
-        backgroundImage: `url(https://ak.picdn.net/shutterstock/videos/1057572358/thumb/1.jpg)`,
-        backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust opacity here
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundBlendMode: 'overlay',
-      }}
-    >
+    <div className="flex flex-col items-center justify-center px-4  animate-gradient">
       <div className="container mx-auto text-center">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-teal-500 mt-16 md:mt-24 lg:mt-32">
-          हामी कलेज <br />
+        <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mt-16 md:mt-24 lg:mt-32">
+          We help you <br />
           <span className="text-black">
             <Typewriter
               options={{
-                strings: ['खोज्न मदत गर्छौं ', 'तुलना गर्न मदत गर्छौं '],
+                strings: ['find colleges ', 'compare colleges '],
                 autoStart: true,
                 loop: true,
               }}
             />
-          </span>{' '}
+          </span>
           <br />
-          <span className="text-teal-500">Best</span>
+          <span className="text-white">Best</span>
         </h1>
         <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-black mt-4 mb-8">
-         Colleges for +2 in Far west ,Nepal. 
+          Colleges for +2 in Far West, Nepal.
         </h2>
-        <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
+        <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 mb-4 ">
           <select
-            className="p-3 bg-teal-500 text-white font-semibold rounded-lg outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-1/2"
+            className="p-3 bg-gradient-to-r from-blue-200 to-purple-600 text-teal-900 font-semibold rounded-lg outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-1/2"
             onChange={(e) => setSelectedSchool(e.target.value)}
           >
-            <option value="">कलेज छान्नुहोस्</option>
+            <option value="">Select College</option>
             <option value="Radiant Secondary School">Radiant Secondary School</option>
             <option value="LBA">LBA</option>
             <option value="SPA">SPA</option>
-            <option value="Sadharan mavi">Shadharan S. School</option>
+            <option value="Sadharan mavi">Sadharan Secondary School</option>
             <option value="Morning Glory">Morning Glory</option>
-            {/* Add more options as needed */}
           </select>
           <input
             type="text"
-            placeholder="स्कूलको नाम प्रविष्ट गर्नुहोस्"
+            placeholder="Enter the name of the school"
             value={selectedSchool}
             onChange={(e) => setSelectedSchool(e.target.value)}
             className="p-3 text-gray-600 outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-full"
@@ -81,13 +71,13 @@ const Banner = () => {
           />
           <button
             onClick={handleFind}
-            className="p-3 bg-teal-500 text-white font-semibold rounded-lg w-full md:w-auto"
+            className="p-3 bg-gradient-to-r from-blue-200 to-purple-600 text-teal-900 font-semibold rounded-lg w-full md:w-auto"
             style={{
               borderRadius: '0.5rem',
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
             }}
           >
-            खोज्नुहोस्
+            Search
           </button>
         </div>
       </div>
