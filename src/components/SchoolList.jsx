@@ -27,7 +27,7 @@ const SchoolList = () => {
   return (
     <div className="min-h-screen overflow-y-auto">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mt-60">Schools for +2</h1>
+        <h1 className="text-3xl font-bold text-center mt-0">Schools for +2</h1>
         <div className="overflow-y max-h-screen mt-10">
           <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
             {loading ? (
