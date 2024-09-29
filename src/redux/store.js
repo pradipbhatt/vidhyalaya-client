@@ -10,10 +10,10 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer from "./reducers/userSlice";
+import userReducer from "./reducers/userSlice"; // Adjust this import based on your file structure
 
 const persistConfig = {
-  key: "root",
+  key: "myApp", // Change the key to 'myApp' or any name you want
   version: 1,
   storage,
 };
