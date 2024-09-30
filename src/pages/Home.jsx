@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="flex flex-col  overflow-hidden">
       <div className="flex flex-col items-center flex-grow py-0 mt-4 overflow-y-auto">
-        <div className="flex flex-col w-full  gap-8 md:gap-6 bg-gradient-to-r from-[rgba(4,81,97,0.5)] via-[rgba(4,81,97,0.3)] to-[rgba(4,81,97,0)]">
+        <div className="flex flex-col w-full  gap-8 md:gap-6 ">
           <Banner />
           <Testimonials />
           {/* <BlogForm /> */}

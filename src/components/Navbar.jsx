@@ -17,10 +17,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 shadow-lg fixed w-full z-10">
+    <nav className="bg-[#00274D] p-4 shadow-lg fixed w-full z-10">
       <div className="flex items-center justify-between max-w-screen-xl mx-auto">
         {/* Logo */}
-        <Link to="/" className="text-3xl font-bold text-white hover:text-gray-200 transition duration-300">
+        <Link to="/" className="text-3xl font-bold text-[#FFD700] hover:text-gray-200 transition duration-300">
           Vidhyalaya
         </Link>
 

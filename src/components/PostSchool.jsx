@@ -28,7 +28,7 @@ const PostSchool = () => {
     teachers: 20,
     teacherQualifications: 'Master\'s Degree',
     passoutRate: '95%',
-    image: 'https://www.soenotes.com/assets/fwu-CeXT1Quv.jpeg',
+    image: 'https://www.visitcambridge.org/app/uploads/2021/11/corpus-christi-1600x0-c-default.jpg',
     showMoreUrl: 'https://example.com',
   });
 

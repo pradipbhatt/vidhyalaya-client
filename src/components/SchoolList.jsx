@@ -28,7 +28,7 @@ const SchoolList = () => {
   return (
     <div className=" flex flex-col items-center">
       <div className=" w-full mx-auto p-4">
-        <h1 className="text-4xl font-bold text-center text-white mt-20 mb-4">Schools for +2</h1>
+        <h1 className="text-4xl font-bold text-center text-teal-900 mt-20 mb-4">Schools for +2</h1>
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           {loading ? (
             <p className="text-center text-white">Loading...</p>
@@ -53,46 +53,46 @@ const SchoolList = () => {
                   }}
                 />
                 <div className="p-4 bg-gray-50"> {/* Add background color for card */}
-                  <h2 className="text-2xl font-bold text-black mb-2">{school.title}</h2>
-                  <p className="text-gray-700 mb-2">{school.description}</p>
+                  <h2 className="text-2xl font-bold text-black mb-2 text-[#00274D]">{school.title}</h2>
+                  <p className="text-gray-700 mb-2 ">{school.description}</p>
                   <div className="mb-4">
                     <p className="text-sm text-gray-600">
-                      <span className="font-bold">Rank:</span> {school.rank}
+                      <span className="font-bold text-[#00274D]">Rank:</span> {school.rank}
                     </p>
                     <p className="text-sm text-gray-600">
-                      <span className="font-bold">Courses:</span> {school.courses}
+                      <span className="font-bold text-[#00274D]">Courses:</span> {school.courses}
                     </p>
                     <p className="text-sm text-gray-600">
-                      <span className="font-bold">Infrastructure:</span> {school.infrastructure}
+                      <span className="font-bold text-[#00274D]">Infrastructure:</span> {school.infrastructure}
                     </p>
                     <p className="text-sm text-gray-600">
-                      <span className="font-bold">Contact Phone:</span> {school.contact.phone}
+                      <span className="font-bold text-[#00274D]">Contact Phone:</span> {school.contact.phone}
                     </p>
                     <p className="text-sm text-gray-600">
-                      <span className="font-bold">Location:</span> {school.location.lat}, {school.location.lng}
+                      <span className="font-bold text-[#00274D]">Location:</span> {school.location.lat}, {school.location.lng}
                     </p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Total Alumni:</span> {school.alumniTotal}
+                        <span className="font-bold text-[#00274D]">Total Alumni:</span> {school.alumniTotal}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Alumni Engineers:</span> {school.alumniEngineers}
+                        <span className="font-bold text-[#00274D]">Alumni Engineers:</span> {school.alumniEngineers}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Alumni Doctors:</span> {school.alumniDoctors}
+                        <span className="font-bold text-[#00274D]">Alumni Doctors:</span> {school.alumniDoctors}
                       </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Teachers:</span> {school.teachers}
+                        <span className="font-bold text-[#00274D]">Teachers:</span> {school.teachers}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Teacher Qualifications:</span> {school.teacherQualifications}
+                        <span className="font-bold text-[#00274D]">Teacher Qualifications:</span> {school.teacherQualifications}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <span className="font-bold">Passout Rate:</span> {school.passoutRate}
+                        <span className="font-bold text-[#00274D]">Passout Rate:</span> {school.passoutRate}
                       </p>
                     </div>
                   </div>

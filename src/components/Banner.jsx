@@ -27,11 +27,11 @@ const Banner = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-4  animate-gradient">
+    <div className="flex flex-col items-center justify-center px-4  ">
       <div className="container mx-auto text-center">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mt-16 md:mt-24 lg:mt-32">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mt-16 md:mt-24 lg:mt-32 text-[#00274D]">
           We help you <br />
-          <span className="text-black">
+          <span className=" text-[#00274D]">
             <Typewriter
               options={{
                 strings: ['find colleges ', 'compare colleges '],
@@ -41,22 +41,22 @@ const Banner = () => {
             />
           </span>
           <br />
-          <span className="text-white">Best</span>
+          <span className="text-white text-[#00274D]">Best</span>
         </h1>
-        <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-black mt-4 mb-8">
+        <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-black mt-4 mb-8 text-[#00274D]">
           Colleges for +2 in Far West, Nepal.
         </h2>
         <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 mb-4 ">
           <select
-            className="p-3 bg-gradient-to-r from-blue-200 to-purple-600 text-teal-900 font-semibold rounded-lg outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-1/2"
+            className="p-3 bg-[#00274D] text-white font-semibold rounded-lg outline-none flex-grow mb-4 md:mb-0 md:mr-2 sm:w-1/2"
             onChange={(e) => setSelectedSchool(e.target.value)}
           >
-            <option value="">Select College</option>
-            <option value="Radiant Secondary School">Radiant Secondary School</option>
-            <option value="LBA">LBA</option>
-            <option value="SPA">SPA</option>
-            <option value="Sadharan mavi">Sadharan Secondary School</option>
-            <option value="Morning Glory">Morning Glory</option>
+            <option  className='bg-white text-black' value="">Select College</option>
+            <option className='bg-white text-black' value="Radiant Secondary School">Radiant Secondary School</option>
+            <option className='bg-white text-black' value="LBA">LBA</option>
+            <option className='bg-white text-black' value="SPA">SPA</option>
+            <option className='bg-white text-black' value="Sadharan mavi">Sadharan Secondary School</option>
+            <option  className='bg-white text-black' value="Morning Glory">Morning Glory</option>
           </select>
           <input
             type="text"
@@ -71,7 +71,7 @@ const Banner = () => {
           />
           <button
             onClick={handleFind}
-            className="p-3 bg-gradient-to-r from-blue-200 to-purple-600 text-teal-900 font-semibold rounded-lg w-full md:w-auto"
+            className="p-3 bg-[#00274D] text-white font-semibold rounded-lg w-full md:w-auto"
             style={{
               borderRadius: '0.5rem',
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
