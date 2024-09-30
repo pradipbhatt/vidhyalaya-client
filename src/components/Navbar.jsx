@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/reducers/userSlice';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* User Actions */}
+        {/* User Profile Actions */}
         <div className="relative">
           {currentUser ? (
             <div className="relative">
@@ -55,29 +55,44 @@ const Navbar = () => {
                 className="flex items-center space-x-2 text-white focus:outline-none"
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
-                <span className="font-medium">{currentUser.name}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={`h-5 w-5 transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
+                {/* Display Circular User Image */}
+                <img
+                  src={currentUser?.userImage || '/default-user.png'} // default image if userImage not available
+                  alt="User"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <span className="font-medium hidden md:block">{currentUser.name}</span>
               </button>
 
+              {/* Dropdown Menu */}
               {isDropdownOpen && (
                 <motion.div
-                  className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10"
+                  className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-4 px-6 z-10"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }} // Adjust duration for dropdown animation
+                  transition={{ duration: 0.3 }}
                 >
+                  {/* User Details */}
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={currentUser?.userImage || '/default-user.png'}
+                      alt="User"
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="font-medium text-gray-900">{currentUser.name}</p>
+                      <p className="text-sm text-gray-500">{currentUser.email}</p>
+                    </div>
+                  </div>
+
+                  <hr className="my-4" />
+
+                  {/* Profile and Logout Buttons */}
                   <Link
                     to="/profile"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300"
+                    onClick={() => setDropdownOpen(false)}
                   >
                     Profile
                   </Link>
@@ -136,7 +151,7 @@ const Navbar = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.5 }} // Adjust duration for mobile menu animation
+          transition={{ duration: 0.5 }}
         >
           {['/', '/about', '/blogs', '/contact', '/schools'].map((path, index) => (
             <Link
@@ -159,6 +174,7 @@ const Navbar = () => {
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
             </Link>
           )}
+
           {/* User Actions in Mobile Menu */}
           {currentUser ? (
             <>

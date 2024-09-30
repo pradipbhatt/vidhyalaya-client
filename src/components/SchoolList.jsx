@@ -27,7 +27,7 @@ const SchoolList = () => {
 
   return (
     <div className=" flex flex-col items-center">
-      <div className="max-w-4xl w-full mx-auto p-4">
+      <div className=" w-full mx-auto p-4">
         <h1 className="text-4xl font-bold text-center text-white mt-20 mb-4">Schools for +2</h1>
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           {loading ? (

@@ -257,7 +257,7 @@ const PostSchool = () => {
         </button>
       </div>
       
-      <div className="max-w-4xl mx-auto mt-8">
+      <div className="w-full mx-auto mt-8">
         <h1 className="text-3xl font-bold text-center">Schools for +2</h1>
         <div className="overflow-y max-h-screen mt-4">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
